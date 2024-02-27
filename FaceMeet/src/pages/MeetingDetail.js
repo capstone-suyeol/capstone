@@ -1,14 +1,14 @@
 import React from 'react';
-import Feed from '../components/Feed';
+import Layout from '../components/Layout';
 
 function MeetingDetail() {
   return (
-    <Feed>
+    <Layout>
       <div className="Before">
           미팅중
 
       </div>
-    </Feed>
+    </Layout>
   );
 }
 

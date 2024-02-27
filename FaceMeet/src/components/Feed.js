@@ -2,10 +2,11 @@ import Box from '@mui/material/Box';
 import ProfileList from './ProfileList';
 import MeetingList from './MeetingList';
 import MeetingLogo from './MeetingLogo.png';
+import './Style.css';
 
 function Feed() {
     return (
-        <>
+        <div className='Layout'>
             <Box
                 component="main"
                 sx={{
@@ -43,7 +44,7 @@ function Feed() {
                     </Box>
                 </Box>
             </Box>
-        </>
+        </div>
     );
 }
 

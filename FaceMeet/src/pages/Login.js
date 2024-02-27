@@ -1,15 +1,15 @@
 import React from 'react';
-import Feed from '../components/Feed';
+import Layout from '../components/Layout';
 
 
 function Login() {
   return (
-    <Feed>
+    <Layout>
         <div className="Before">
 
           로그인
         </div>
-    </Feed>
+    </Layout>
   );
 }
 

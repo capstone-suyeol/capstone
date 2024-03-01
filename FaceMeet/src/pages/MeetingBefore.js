@@ -4,6 +4,9 @@ import '../components/Style.css';
 import { AiFillVideoCamera, AiOutlinePlus, AiOutlineFileSearch } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
 
+// 모달창 데이터 전달 X
+// 스타일 정의 X ( 배경 흐리게 & 하나의 모달창만 뜰 수 있도록 설정)
+
 const Modal = ({ onClose, children }) => {
 
     const modalStyle = {
@@ -45,7 +48,7 @@ const Modal = ({ onClose, children }) => {
 const NewMeetingModal = ({ onClose }) => {
     return (
         <Modal onClose={onClose}>
-            <p>새로운 미팅 만들기</p>
+            <p>새 회의 만들기</p>
             <form>
                 <p>Title</p>
                 <input

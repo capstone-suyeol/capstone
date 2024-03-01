@@ -27,9 +27,9 @@
     width: 7rem;
     height: 7rem;
     border-radius: 10px;
-    background-color: rgb(95, 240, 95);
+    background-color: #4EE080;
     margin-top: 10rem;
-    margin-left: 8.5rem;
+    margin-left: 7.5rem;
     margin-right: 2rem;
     margin-bottom: 10px;
     box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.5);
@@ -43,34 +43,37 @@
 
 .Chatting {
     position: absolute;
-    width: 19rem;
-    height: 31rem;
+    width: 20rem;
+    height: 34rem;
     background-color: rgb(190, 190, 190);
-    margin-left: 79%;
+    margin-top: 1%;
+    margin-left: 77.5%;
 }
 
 .Score {
     position: absolute;
-    width: 19rem;
-    height: 9rem;
+    width: 20rem;
+    height: 10rem;
     background-color: rgb(131, 131, 131);
     padding: auto;
-    margin-top: 36%;
-    margin-left: 79%;
+    margin-top: 37%;
+    margin-left: 77.5%;
 }
 
 .Camera{
     position: fixed;
-    width: 68rem;
-    height: 78%;
-    background-color: rgb(215, 235, 215);
-    opacity: 40%;
+    width: 70rem;
+    height: 96%;
+    margin-top: 1%;
+    margin-left: 2%;
+    background-color: rgb(215, 235, 215, 0.5);
 }
 
 .두명1{
     position: fixed;
-    width: 32rem;
+    width: 34.5rem;
     margin-top: 10%;
+    margin-right: 2%;
     height: 35%;
     background-color: rgb(118, 237, 118);
     opacity: 40%;
@@ -78,18 +81,18 @@
 
 .두명2{
     position: fixed;
-    width: 32rem;
+    width: 34.5rem;
     margin-top: 10%;
     height: 35%;
     background-color: rgb(89, 177, 89);
-    margin-left: 34%;
+    margin-left: 37%;
     opacity: 40%;
 }
 
 .세명1{
     position: fixed;
-    width: 32rem;
-    height: 35%;
+    width: 34.5rem;
+    height: 45%;
     background-color: rgb(171, 172, 244);
     margin-left: 17%;
     opacity: 40%;
@@ -97,55 +100,98 @@
 
 .세명2{
     position: fixed;
-    width: 32rem;
-    height: 35%;
+    width: 34.5rem;
+    height: 45%;
     background-color: rgb(171, 172, 244);
-    margin-top: 18%;
-    margin-left: 34%;
+    margin-top: 23%;
+    margin-left: 37%;
     opacity: 40%;
 }
 
 .세명3{
     position: fixed;
-    width: 32rem;
-    height: 35%;
+    width: 34.5rem;
+    height: 45%;
     background-color: rgb(171, 172, 244);
-    margin-top: 18%;
+    margin-top: 23%;
     opacity: 40%;
 }
 
 .네명1{
     position: fixed;
-    width: 32rem;
-    height: 35%;
+    width: 34.5rem;
+    height: 45%;
     background-color: rgb(74, 74, 74);
     opacity: 20%;
 }
 
 .네명2{
     position: fixed;
-    width: 32rem;
-    height: 35%;
+    width: 34.5rem;
+    height: 45%;
     background-color: rgb(74, 74, 74);
-    margin-left: 34%;
+    margin-left: 37%;
     opacity: 20%;
 }
 
 .네명3{
     position: fixed;
-    width: 32rem;
-    height: 35%;
+    width: 34.5rem;
+    height: 45%;
     background-color: rgb(74, 74, 74);
-    margin-top: 18%;
+    margin-top: 23%;
     opacity: 20%;
 }
 
 .네명4{
     position: fixed;
-    width: 32rem;
-    height: 35%;
+    width: 34.5rem;
+    height: 45%;
     background-color: rgb(74, 74, 74);
-    margin-top: 18%;
-    margin-left: 34%;
+    margin-top: 23%;
+    margin-left: 37%;
     opacity: 20%;
 }
+
+.NoteButton {
+    position: absolute;
+    width: 8rem;
+    height: 8rem;
+    border-radius: 10px;
+    background-color: #4EE080;
+    margin-top: 10rem;
+    margin-left: 8.5rem;
+    margin-right: 2rem;
+    margin-bottom: 10px;
+    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.5);
+    /* 여백 설정 */
+}
+
+.NoteList {
+    position: relative;
+    display: flex; /* Flexbox를 사용하여 자식 요소들을 가로로 배치합니다. */
+    flex-direction: row; /* 요소들을 가로로 나열합니다. 기본값은 세로로 나열되므로 설정이 필요합니다. */
+    justify-content: space-around;
+    background-color: rgb(206, 206, 206);
+    margin-bottom: 40%;
+    margin-left: 35%;
+    padding-right: 2%;
+    width: 60%;
+    height: 100%;
+}
+
+.NoteList p {
+    flex: 0.5;
+    font-size: smaller;
+    margin-left: 2%;
+    background-color: #4EE080;
+    padding-top: 1%;
+    padding-left: 3%;
+    padding-right: 3%;
+    height: 5%;
+    border-radius: 10rem;
+    text-align: center;
+    font-weight: bold; 
+}
+
+  

@@ -38,4 +38,114 @@
 
 .green-box p{
     margin-top: 105px;
+    overflow-y: auto; /*영역이 부족할 때만 스크롤 허용*/
+}
+
+.Chatting {
+    position: absolute;
+    width: 19rem;
+    height: 31rem;
+    background-color: rgb(190, 190, 190);
+    margin-left: 79%;
+}
+
+.Score {
+    position: absolute;
+    width: 19rem;
+    height: 9rem;
+    background-color: rgb(131, 131, 131);
+    padding: auto;
+    margin-top: 36%;
+    margin-left: 79%;
+}
+
+.Camera{
+    position: fixed;
+    width: 68rem;
+    height: 78%;
+    background-color: rgb(215, 235, 215);
+    opacity: 40%;
+}
+
+.두명1{
+    position: fixed;
+    width: 32rem;
+    margin-top: 10%;
+    height: 35%;
+    background-color: rgb(118, 237, 118);
+    opacity: 40%;
+}
+
+.두명2{
+    position: fixed;
+    width: 32rem;
+    margin-top: 10%;
+    height: 35%;
+    background-color: rgb(89, 177, 89);
+    margin-left: 34%;
+    opacity: 40%;
+}
+
+.세명1{
+    position: fixed;
+    width: 32rem;
+    height: 35%;
+    background-color: rgb(171, 172, 244);
+    margin-left: 17%;
+    opacity: 40%;
+}
+
+.세명2{
+    position: fixed;
+    width: 32rem;
+    height: 35%;
+    background-color: rgb(171, 172, 244);
+    margin-top: 18%;
+    margin-left: 34%;
+    opacity: 40%;
+}
+
+.세명3{
+    position: fixed;
+    width: 32rem;
+    height: 35%;
+    background-color: rgb(171, 172, 244);
+    margin-top: 18%;
+    opacity: 40%;
+}
+
+.네명1{
+    position: fixed;
+    width: 32rem;
+    height: 35%;
+    background-color: rgb(74, 74, 74);
+    opacity: 20%;
+}
+
+.네명2{
+    position: fixed;
+    width: 32rem;
+    height: 35%;
+    background-color: rgb(74, 74, 74);
+    margin-left: 34%;
+    opacity: 20%;
+}
+
+.네명3{
+    position: fixed;
+    width: 32rem;
+    height: 35%;
+    background-color: rgb(74, 74, 74);
+    margin-top: 18%;
+    opacity: 20%;
+}
+
+.네명4{
+    position: fixed;
+    width: 32rem;
+    height: 35%;
+    background-color: rgb(74, 74, 74);
+    margin-top: 18%;
+    margin-left: 34%;
+    opacity: 20%;
 }

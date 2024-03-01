@@ -32,7 +32,7 @@ function ProfileList() {
             sx={{
                 display: 'flex',
                 padding: '1.5rem',
-                overflowX: 'scroll',
+                overflowX: 'auto', // 친구가 많아서 영역이 부족할 때만 스크롤 허용
                 border: `1px solid ${grey[200]}`,
                 borderRadius: '2px',
                 '> div + div': {

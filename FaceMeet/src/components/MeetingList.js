@@ -37,7 +37,7 @@ function MeetingList() {
                 height: '100%',
                 width: '87.5%',
                 padding: '1.5rem',
-                overflowY: 'scroll',
+                overflowY: 'auto', // 영역이 부족할 때만 스크롤 허용
                 border: `1px solid ${grey[200]}`,
                 borderRadius: '2px',
                 '> div + div': {

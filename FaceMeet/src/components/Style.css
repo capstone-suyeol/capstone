@@ -168,16 +168,16 @@
 }
 
 .NoteList {
-    position: relative;
+    position: fixed;
     display: flex; /* Flexbox를 사용하여 자식 요소들을 가로로 배치합니다. */
     flex-direction: row; /* 요소들을 가로로 나열합니다. 기본값은 세로로 나열되므로 설정이 필요합니다. */
     justify-content: space-around;
     background-color: rgb(206, 206, 206);
     margin-bottom: 40%;
-    margin-left: 35%;
+    margin-left: 23%;
     padding-right: 2%;
-    width: 60%;
-    height: 100%;
+    width: 50rem;
+    height: 70%;
 }
 
 .NoteList p {
@@ -194,4 +194,33 @@
     font-weight: bold; 
 }
 
-  
+.NotelistBox {
+    position: fixed;
+}
+
+#mic, #video, #setting{
+    position: relative;
+    margin-left: 2%;
+    font-size: 2rem;
+    font-weight: bolder;
+
+}
+
+#mic{
+    color: red;
+    margin-top: -15%;
+    margin-left: 50%;
+}
+
+
+#video{
+    color: red;
+    margin-top: -16%;
+    margin-left: 68%;
+}
+
+#setting{
+    color: black;
+    margin-top: -16%;
+    margin-left: 88%;
+}

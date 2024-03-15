@@ -1,0 +1,125 @@
+img {
+    margin: auto;
+    display: flex;
+}
+
+box {
+    position: absolute;
+    width: 400px;
+    height: 530px;
+    left: 744px;
+    top: 222px;
+    margin: auto;
+    padding: 20px;
+    
+    background: #ffffff;
+    border-radius: 20px;
+}
+
+logo {
+    width: 186.5px;
+    height: 90px;
+    left: 862px;
+    top: 248px;
+}
+
+input[type="text"][name="userName"] {
+    margin-top: 20px;
+    margin-left: 35px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 15px 16px;
+    gap: 8px;
+
+    width: 300px;
+    height: 20px;
+
+    background: #97F7B8;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    border: none;
+}
+
+input[type="password"][name="userPassword"] {
+    margin-top: 20px;
+    margin-left: 35px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 15px 16px;
+    gap: 8px;
+
+    width: 300px;
+    height: 20px;
+
+    background: #97F7B8;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    border: none;
+}
+
+#idButton {
+    margin-top: 20px;
+    margin-left: 160px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 15px 20px;
+    gap: 8px;
+
+    width: 80px;
+    height: 40px;
+
+    background: #97F7B8;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+#idButton:hover {
+    background: #7acc9e;
+}
+
+/* ______________  또는  ______________ */
+text1 {
+    margin-left: 95px;
+    color: #7C7C7C;
+}
+
+#kakaoButton {
+    margin-top: 20px;
+    margin-left: 60px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 20px 80px;
+    gap: 8px;
+
+    width: 300px;
+    height: 40px;
+
+    background: #FFE812;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+#kakaoButton:hover {
+    background: #b3ab63;
+}
+
+/* 회원가입  |  아이디 찾기  |  비밀번호 찾기 */
+span {
+    margin-left: 40px;
+    color: #7C7C7C;
+    cursor: pointer;
+}
+
+span:hover {
+    background: #a6a7a7;
+}

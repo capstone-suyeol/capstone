@@ -17,20 +17,23 @@ function NoteList() {
 
   return (
     <Layout>
-      <div className='NoteButton' onClick={Back}>
-        <div style={iconbox}>
-          <AiOutlineFileSearch style={iconStyle} />
-        </div>
-        <p style={{ marginTop: '2rem', marginLeft: '0.8rem', position: 'fixed', fontWeight: 'bold' }}>회의 노트 목록</p>
-      </div>
+      <div className='NotelistBox'>
 
-      <div className='NoteList'>
-        <p>날짜</p>
-        <p>시간</p>
-        <p>이름</p>
-        <p>분위기점수</p>
-        <p>다시보기</p>
+        <div className='NoteButton' onClick={Back}>
+          <div style={iconbox}>
+            <AiOutlineFileSearch style={iconStyle} />
+          </div>
+          <p style={{ marginTop: '2rem', marginLeft: '0.8rem', position: 'fixed', fontWeight: 'bold' }}>회의 노트 목록</p>
         </div>
+
+        <div className='NoteList'>
+          <p>날짜</p>
+          <p>시간</p>
+          <p>이름</p>
+          <p>분위기점수</p>
+          <p>다시보기</p>
+        </div>
+      </div>
 
     </Layout>
   );

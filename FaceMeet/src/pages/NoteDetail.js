@@ -1,11 +1,14 @@
 import React from 'react';
-import Layout from '../components/Layout';
+import Feed from '../components/Feed';
 
 function NoteDetail() {
   return (
-    <Layout>
+    <Feed>
+        <div className="Before">
+
             회의노트 자세히
-    </Layout>
+        </div>
+    </Feed>
   );
 }
 

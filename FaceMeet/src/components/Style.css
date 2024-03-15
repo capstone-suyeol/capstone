@@ -1,11 +1,9 @@
-
 .custom-avatar {
     width: 56px;
     height: 56px;
     border: 2px solid rgb(210, 209, 209);
     border-radius: 0;
 }
-<<<<<<< HEAD
 
 .Layout {
     position: fixed;
@@ -22,8 +20,6 @@
     border: 5px solid white;
     position: fixed;
 }
-
-=======
 
 .green-box {
     display: flex;
@@ -229,4 +225,3 @@
     margin-left: 88%;
 }
 
->>>>>>> jiwon

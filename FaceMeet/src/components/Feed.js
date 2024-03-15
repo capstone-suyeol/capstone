@@ -2,16 +2,13 @@ import Box from '@mui/material/Box';
 import ProfileList from './ProfileList';
 import MeetingList from './MeetingList';
 import MeetingLogo from './MeetingLogo.png';
-<<<<<<< HEAD
 import './Style.css';
 import { CiMicrophoneOff, CiVideoOff, CiSettings } from "react-icons/ci";
 
-=======
->>>>>>> jiwon
 
 function Feed() {
     return (
-        <>
+        <div className='Layout'>
             <Box
                 component="main"
                 sx={{
@@ -93,7 +90,6 @@ function Feed() {
                     <img src={MeetingLogo} alt="Meeting 로고" style={{ width: '14rem', height: '8rem', marginLeft: '5%' }} />
                 </Box>
 
-<<<<<<< HEAD
 
                 <p style={{ position: 'absolute', marginLeft: '21%', marginTop: '7.9%' }}>이름</p>
                 {/* ProfileList Section */}
@@ -108,16 +104,14 @@ function Feed() {
                         marginRight: '2%',
 
                     }} />
-=======
->>>>>>> jiwon
-                    <Box sx={{ flex: 1 }}>
                         <ProfileList />
                     </Box>
                 </Box>
-            </Box>
-        </>
+        </div>
     );
 }
 
 export default Feed;
+
+
 

@@ -36,9 +36,10 @@
     /* 여백 설정 */
 }
 
-.green-box p{
+.green-box p {
     margin-top: 105px;
-    overflow-y: auto; /*영역이 부족할 때만 스크롤 허용*/
+    overflow-y: auto;
+    /*영역이 부족할 때만 스크롤 허용*/
 }
 
 .Chatting {
@@ -60,7 +61,7 @@
     margin-left: 77.5%;
 }
 
-.Camera{
+.Camera {
     position: fixed;
     width: 70rem;
     height: 96%;
@@ -69,7 +70,7 @@
     background-color: rgb(215, 235, 215, 0.5);
 }
 
-.두명1{
+.두명1 {
     position: fixed;
     width: 34.5rem;
     margin-top: 10%;
@@ -79,7 +80,7 @@
     opacity: 40%;
 }
 
-.두명2{
+.두명2 {
     position: fixed;
     width: 34.5rem;
     margin-top: 10%;
@@ -89,7 +90,7 @@
     opacity: 40%;
 }
 
-.세명1{
+.세명1 {
     position: fixed;
     width: 34.5rem;
     height: 45%;
@@ -98,7 +99,7 @@
     opacity: 40%;
 }
 
-.세명2{
+.세명2 {
     position: fixed;
     width: 34.5rem;
     height: 45%;
@@ -108,7 +109,7 @@
     opacity: 40%;
 }
 
-.세명3{
+.세명3 {
     position: fixed;
     width: 34.5rem;
     height: 45%;
@@ -117,7 +118,7 @@
     opacity: 40%;
 }
 
-.네명1{
+.네명1 {
     position: fixed;
     width: 34.5rem;
     height: 45%;
@@ -125,7 +126,7 @@
     opacity: 20%;
 }
 
-.네명2{
+.네명2 {
     position: fixed;
     width: 34.5rem;
     height: 45%;
@@ -134,7 +135,7 @@
     opacity: 20%;
 }
 
-.네명3{
+.네명3 {
     position: fixed;
     width: 34.5rem;
     height: 45%;
@@ -143,7 +144,7 @@
     opacity: 20%;
 }
 
-.네명4{
+.네명4 {
     position: fixed;
     width: 34.5rem;
     height: 45%;
@@ -168,16 +169,18 @@
 }
 
 .NoteList {
-    position: relative;
-    display: flex; /* Flexbox를 사용하여 자식 요소들을 가로로 배치합니다. */
-    flex-direction: row; /* 요소들을 가로로 나열합니다. 기본값은 세로로 나열되므로 설정이 필요합니다. */
+    position: fixed;
+    display: flex;
+    /* Flexbox를 사용하여 자식 요소들을 가로로 배치합니다. */
+    flex-direction: row;
+    /* 요소들을 가로로 나열합니다. 기본값은 세로로 나열되므로 설정이 필요합니다. */
     justify-content: space-around;
     background-color: rgb(206, 206, 206);
     margin-bottom: 40%;
-    margin-left: 35%;
+    margin-left: 23%;
     padding-right: 2%;
-    width: 60%;
-    height: 100%;
+    width: 50rem;
+    height: 70%;
 }
 
 .NoteList p {
@@ -191,7 +194,38 @@
     height: 5%;
     border-radius: 10rem;
     text-align: center;
-    font-weight: bold; 
+    font-weight: bold;
 }
 
-  
+.NotelistBox {
+    position: fixed;
+}
+
+#mic,
+#video,
+#setting {
+    position: relative;
+    margin-left: 2%;
+    font-size: 2rem;
+    font-weight: bolder;
+
+}
+
+#mic {
+    color: red;
+    margin-top: -15%;
+    margin-left: 50%;
+}
+
+
+#video {
+    color: red;
+    margin-top: -16%;
+    margin-left: 68%;
+}
+
+#setting {
+    color: black;
+    margin-top: -16%;
+    margin-left: 88%;
+}

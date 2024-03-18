@@ -1,4 +1,4 @@
-import React, { Suspense, lazy } from 'react';
+import React, {  lazy } from 'react';
 import './App.css';
 import Feed from '../src/components/Feed';
 import { Routes, Route, BrowserRouter as Router } from 'react-router-dom';
@@ -12,10 +12,12 @@ const NoteDetail = lazy(() => import('./pages/NoteDetail'));
 
 
 function App() {
+
   return (
-    <Suspense fallback={<Feed />}>
+
       <Router>
         <Routes>
+          <Route path="/" element={<Feed />} />
           <Route path='/' element={<Home />} />
           <Route path='/Login' element={<Login />} />
           <Route path='/Join' element={<Join />} />
@@ -24,7 +26,7 @@ function App() {
           <Route path='/NoteDetail' element={<NoteDetail />} />{/* db 연동 할 땐 NoteDetail/:_id로 변경해야함*/}
         </Routes>
       </Router>
-    </Suspense>
+
   );
 }
 

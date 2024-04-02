@@ -5,23 +5,56 @@ from django.contrib.auth.base_user import AbstractBaseUser
 from django.utils.functional import SimpleLazyObject
 
 
-# 커스텀 유저 모델을 사용할 경우 아래 User 모델 정의, 내장 User 모델을 사용할 경우 주석 처리
-class CustomUser(AbstractBaseUser):
+from django.contrib.auth.models import BaseUserManager
+
+class CustomUserManager(BaseUserManager):
+    def create_user(self, email, nickname, password=None, **extra_fields):
+        """
+        일반 사용자 생성
+        """
+        if not email:
+            raise ValueError('The Email field must be set')
+        email = self.normalize_email(email)
+        user = self.model(email=email, nickname=nickname, **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, email, nickname, password=None, **extra_fields):
+        """
+        관리자 사용자 생성
+        """
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', True)
+
+        if extra_fields.get('is_staff') is not True:
+            raise ValueError('Superuser must have is_staff=True.')
+        if extra_fields.get('is_superuser') is not True:
+            raise ValueError('Superuser must have is_superuser=True.')
+
+        return self.create_user(email, nickname, password, **extra_fields)
+
+
+from django.db import models
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
+
+class CustomUser(AbstractBaseUser, PermissionsMixin):
     nickname = models.CharField(max_length=100)
-    password = models.CharField(max_length=100)  # 실제 애플리케이션에서는 비밀번호를 직접 저장하지 말고 Django의 내장 기능을 사용하세요.
-    #profile_picture = models.ImageField(upload_to='profile_pics/')
+    password = models.CharField(max_length=100)
     email = models.EmailField(max_length=255, unique=True)
+    is_staff = models.BooleanField(default=False)  # 관리자 페이지 접근 권한
+    is_active = models.BooleanField(default=True)  # 계정 활성화 상태
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['nickname']
-    # is_anonymous와 is_authenticated 속성 추가
+
+    objects = CustomUserManager()
+
     @property
     def is_anonymous(self):
-        # 익명 사용자가 아니므로 항상 False 반환
         return False
 
     @property
     def is_authenticated(self):
-        # 인증된 사용자이므로 항상 True 반환
         return True
 
 class Meeting(models.Model):

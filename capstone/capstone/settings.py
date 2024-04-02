@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'drf_yasg',
-    'Facemeet'
+    'Facemeet',
+    'corsheaders',
 ]
 
 REST_FRAMORK = {
@@ -75,6 +76,8 @@ REST_FRAMORK = {
     }
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -85,6 +88,10 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'capstone.urls'
+
+CORS_ALLOW_ALL_ORIGINS = True
+
+CORS_ORIGIN_WHITELIST = ['http://localhost:3000' ,'http://localhost:8000']
 
 TEMPLATES = [
     {

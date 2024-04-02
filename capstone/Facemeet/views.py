@@ -43,3 +43,28 @@ def login_user(request):
         })
     else:
         return Response({'error': '이메일 또는 비밀번호가 잘못되었습니다.'}, status=status.HTTP_401_UNAUTHORIZED)
+
+
+from rest_framework import viewsets
+from .models import CustomUser, Meeting, Participant, Friend, RecordingFile
+from .serializers import CustomUserSerializer, MeetingSerializer, ParticipantSerializer, FriendSerializer, RecordingFileSerializer
+
+class CustomUserViewSet(viewsets.ModelViewSet):
+    queryset = CustomUser.objects.all()
+    serializer_class = CustomUserSerializer
+
+class MeetingViewSet(viewsets.ModelViewSet):
+    queryset = Meeting.objects.all()
+    serializer_class = MeetingSerializer
+
+class ParticipantViewSet(viewsets.ModelViewSet):
+    queryset = Participant.objects.all()
+    serializer_class = ParticipantSerializer
+
+class FriendViewSet(viewsets.ModelViewSet):
+    queryset = Friend.objects.all()
+    serializer_class = FriendSerializer
+
+class RecordingFileViewSet(viewsets.ModelViewSet):
+    queryset = RecordingFile.objects.all()
+    serializer_class = RecordingFileSerializer

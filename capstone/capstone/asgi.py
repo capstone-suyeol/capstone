@@ -11,7 +11,7 @@ application = ProtocolTypeRouter({
   "http": get_asgi_application(),
   "websocket": AuthMiddlewareStack(
         URLRouter(
-            your_app.routing.websocket_urlpatterns
+            Facemeet.routing.websocket_urlpatterns
         )
     ),
 })

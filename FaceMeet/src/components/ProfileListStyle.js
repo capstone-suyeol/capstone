@@ -1,47 +1,45 @@
-import { Avatar, Typography, Box } from '@mui/material';
-import logo from '../dog.svg';
-import './Style.css';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import { Box } from '@mui/material';
+import ProfileListStyle from './ProfileListStyle';
 
-// 해당 유저의 프로필로 이동 X
+function ProfileList() {
+    const [profileList, setProfileList] = useState();  // 변수 이름 변경
 
-function ProfileListStyle({ username, state }) {
+    /* 친구 목록에서 친구의 프로필과 이름을 가져올 수 있어야 함. */
+
+    useEffect(() => {
+        axios.get('/testData.json')
+            .then(response => {
+                const data = response.data.Profile;
+                const sortedData = data.sort((a, b) => b.state - a.state);
+                setProfileList(sortedData);
+            })
+            .catch(error => {
+                console.error('데이터를 불러오는 중 에러 발생:', error);
+            });
+    }, []);
+
+    if (!profileList) return <div>loading...</div>;
+
     return (
-        <div>
-            <Box
-                sx={{
-                    position: 'relative',
-                    display: 'inline-block',
-                }}
-            >
-                <Avatar src={logo} alt={username} className='custom-avatar'
-                    sx={{
-                        width: '5rem',
-                        height: '5rem',
-                        marginLeft: '8px',
-                        borderRadius: '15%',
-                        '> img': {
-                            padding: '1.5px',
-
-                        },
-                    }} />
-
-                <Box
-                    sx={{
-                        position: 'absolute',
-                        bottom: '0',
-                        right: '0',
-                        width: '20px',
-                        height: '20px',
-                        borderRadius: '50%',
-                        backgroundColor: state ? '#4EE080' : '#FF8A00', // 원 모양 도형의 배경색
-                        border: '2px solid white', // 원 모양 도형의 테두리
-                    }}
-                />
-            </Box>
-
-            <Typography variant="body2" noWrap align='center' sx={{ width: '56px' }}> {username}</Typography>
-        </div>
+        <Box
+            sx={{
+                display: 'flex',
+                padding: '1.5rem',
+                overflowX: 'auto',
+                border: `1px solid #e0e0e0`,
+                borderRadius: '2px',
+                '> div + div': {
+                    marginLeft: '0.5rem',
+                },
+            }}
+        >
+            {profileList.map((profile) => (
+                <ProfileListStyle key={profile.id} username={profile.name} state={profile.state} />
+            ))}
+        </Box>
     );
-
 }
-export default ProfileListStyle;
+
+export default ProfileList;

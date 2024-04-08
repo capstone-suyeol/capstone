@@ -1,4 +1,4 @@
-import React, { Suspense, lazy } from 'react';
+import React, {  lazy } from 'react';
 import './App.css';
 import Feed from '../src/components/Feed';
 import { Routes, Route, BrowserRouter as Router } from 'react-router-dom';
@@ -15,10 +15,12 @@ const Testjang = lazy(() => import('./pages/Testjang'));
 
 
 function App() {
+
   return (
-    <Suspense fallback={<Feed />}>
+
       <Router>
         <Routes>
+          <Route path="/" element={<Feed />} />
           <Route path='/' element={<Home />} />
           <Route path='/Login' element={<Login />} />
           <Route path='/Join' element={<Join />} />
@@ -30,7 +32,7 @@ function App() {
           <Route path='/Testjang' element={<Testjang />} /> {/* 장고 테스트*/}
         </Routes>
       </Router>
-    </Suspense>
+
   );
 }
 

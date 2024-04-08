@@ -1,4 +1,7 @@
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
+import axios from 'axios';
 import ProfileList from './ProfileList';
 import MeetingList from './MeetingList';
 import MeetingLogo from './MeetingLogo.png';
@@ -7,6 +10,28 @@ import { CiMicrophoneOff, CiVideoOff, CiSettings } from "react-icons/ci";
 
 
 function Feed() {
+    const navigate = useNavigate();
+
+    const [profileList, setProfileList] = useState();
+
+    useEffect(() => {
+        axios.get('/testData.json')
+            .then(response => {
+                const data = response.data.User;
+                console.log(data);
+                setProfileList(data);
+            })
+            .catch(error => {
+                console.error('데이터를 불러오는 중 에러 발생:', error);
+            });
+    }, []);
+
+
+    if (!profileList) {
+        return <div>Loading...</div>;
+    }
+
+
     return (
         <div className='Layout'>
             <Box
@@ -30,11 +55,11 @@ function Feed() {
                 }}
             >
                 {/* MeetingList Section */}
-                <Box component="section" sx={{ gridColumn: '1 / 2', gridRow: '2 / span 5', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
+                <Box component="section" sx={{ gridColumn: '1 / 2', gridRow: '2 / 6', display: 'fle', flexDirection: 'column', justifyContent: 'flex-end' }}>
                     <MeetingList sx={{ height: '100%' }} />
                     <Box sx={{
                         position: 'relative',
-                        paddingTop: '10%',
+                        paddingTop: '3%',
                         width: '16.3rem',
                         height: '10rem',
                     }} >
@@ -57,7 +82,7 @@ function Feed() {
                                     width: '17px',
                                     height: '17px',
                                     borderRadius: '50%',
-                                    backgroundColor: '#FF8A00', // 원 모양 도형의 배경색
+                                    backgroundColor: profileList && profileList.length > 0 && profileList[0].state ? '#4EE080' : '#FF8A00',
                                     border: '1px solid white', // 원 모양 도형의 테두리
                                 }}
                             />
@@ -67,46 +92,41 @@ function Feed() {
                             marginLeft: '27%',
                             marginTop: '-16%',
                             fontWeight: 'bold'
-                        }}>홍길동</div>
-                        
-                        <div style = {{
-                            fontSize: '0.8rem',
-                            position: 'relative',
-                            marginLeft: '27%',
-                            marginTop: '0%',
-                            fontWeight: 'bold'
-                        }}> 온라인 </div>
+                        }}>
+                            {profileList && profileList.length > 0 && profileList[0].name}
+                        </div>
 
-                            <div id='mic'><CiMicrophoneOff /> </div>
+                        {profileList && profileList.length > 0 && (
+                            <div style={{
+                                fontSize: '0.8rem',
+                                position: 'relative',
+                                marginLeft: '27%',
+                                marginTop: '0%',
+                                fontWeight: 'bold'
+                            }}>
+                                {profileList[0].state ? '온라인' : '오프라인'}
+                            </div>
+                        )}
 
-                            <div id='video'> <CiVideoOff /> </div>
 
-                            <div id='setting'><CiSettings /> </div>
+                        <div id='mic'><CiMicrophoneOff /> </div>
+
+                        <div id='video'> <CiVideoOff /> </div>
+
+                        <div id='setting' onClick={() => navigate('/NoteDetail')}><CiSettings /> </div>
                     </Box>
                 </Box>
+
 
                 {/* MeetingLogo Section (Top-left corner) */}
                 <Box component="section" sx={{ gridColumn: '1 / 2', gridRow: '1 / 2', display: 'flex', justifyContent: 'flex-start', alignItems: 'flex-start', marginLeft: '1rem', marginTop: '1rem' }}>
-                    <img src={MeetingLogo} alt="Meeting 로고" style={{ width: '14rem', height: '8rem', marginLeft: '5%' }} />
+                    <img src={MeetingLogo} alt="Meeting 로고" style={{ width: '14rem', height: '8rem', marginLeft: '5%' }} onClick={() => navigate('/')} />
                 </Box>
 
-
-                <p style={{ position: 'absolute', marginLeft: '21%', marginTop: '7.9%' }}>이름</p>
-                {/* ProfileList Section */}
-                <Box component="section" sx={{ gridColumn: '3 / 80 ', gridRow: '1 / span 1', display: 'flex', alignItems: 'center' }}>
-                    {/* 사용자의 프로필 - 데이터 받아서 이미지 뜨도록 하는 코드 필요*/}
-                    <Box sx={{
-                        position: 'relative',
-                        backgroundColor: 'grey',
-                        width: '5rem',
-                        height: '5rem',
-                        borderRadius: '15%',
-                        marginRight: '2%',
-
-                    }} />
-                        <ProfileList />
-                    </Box>
+                <Box sx = {{ gridColumn: '2 / -1'}}>
+                    <ProfileList />
                 </Box>
+            </Box>
         </div>
     );
 }

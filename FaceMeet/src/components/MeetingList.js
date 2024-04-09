@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { faker } from '@faker-js/faker';
+import axios from 'axios';
 import { Box } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import MeetingListStyle from './MeetingListStyle';
@@ -9,9 +9,19 @@ function MeetingList() {
 
     /* 해당 회의 사진이 없을 경우 회의 이름이 사진으로 뜨게끔 설정해야함. */
 
-
     useEffect(() => {
-        const list = [...Array(4)].map((_, i) => ({
+        axios.get('/testData.json')
+            .then(response => {
+                const data = response.data.Meeting;
+                console.log(data);
+                setMeetingList(data);
+            })
+            .catch(error => {
+                console.error('데이터를 불러오는 중 에러 발생:', error);
+            });
+    }, []);
+
+    /*    const list = [...Array(4)].map((_, i) => ({
             username: faker.name.findName(),
             name: faker.name.firstName(),
             phone: faker.phone.number(),
@@ -20,9 +30,9 @@ function MeetingList() {
             avafar: faker.internet.avatar(),
             id: i,
         }));
-
+    
         setMeetingList(list);
-    }, []);
+    }, []);*/
 
     if (!MeetingList) return <div>loading</div>;
 
@@ -37,7 +47,7 @@ function MeetingList() {
                 height: '100%',
                 width: '87.5%',
                 padding: '1.5rem',
-                overflowY: 'scroll',
+                overflowY: 'auto', // 영역이 부족할 때만 스크롤 허용
                 border: `1px solid ${grey[200]}`,
                 borderRadius: '2px',
                 '> div + div': {
@@ -54,8 +64,8 @@ function MeetingList() {
                 },
             }}
         >
-            {MeetingList.map((Meeting) => (
-                <MeetingListStyle key={Meeting.id} username={Meeting.username} />
+            {MeetingList.map((data) => (
+                <MeetingListStyle key={data.id} title={data.title} />
             ))}
 
         </Box>

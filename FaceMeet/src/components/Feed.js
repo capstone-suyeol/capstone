@@ -8,6 +8,7 @@ import MeetingLogo from './MeetingLogo.png';
 import './Style.css';
 import { CiMicrophoneOff, CiVideoOff, CiSettings } from "react-icons/ci";
 
+// 해당 유저의 프로필 가져오는 코드 필요 **
 
 function Feed() {
     const navigate = useNavigate();
@@ -38,7 +39,7 @@ function Feed() {
                 component="main"
                 sx={{
                     display: 'grid',
-                    maxHeight: '100vh',
+                    maxHeight: '93vh',
                     gridTemplateColumns: {
                         xs: 'repeat(6, 1fr)',
                         sm: 'repeat(6, 1fr)',
@@ -132,6 +133,3 @@ function Feed() {
 }
 
 export default Feed;
-
-
-

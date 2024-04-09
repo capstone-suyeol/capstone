@@ -169,7 +169,7 @@
 }
 
 .NoteList {
-    position: fixed;
+    position: relative;
     display: flex;
     /* Flexbox를 사용하여 자식 요소들을 가로로 배치합니다. */
     flex-direction: row;
@@ -177,10 +177,10 @@
     justify-content: space-around;
     background-color: rgb(206, 206, 206);
     margin-bottom: 40%;
-    margin-left: 23%;
+    margin-left: 35%;
     padding-right: 2%;
-    width: 50rem;
-    height: 70%;
+    width: 60%;
+    height: 100%;
 }
 
 .NoteList p {
@@ -195,68 +195,4 @@
     border-radius: 10rem;
     text-align: center;
     font-weight: bold;
-}
-
-.NotelistBox {
-    position: fixed;
-}
-
-#mic, #video, #setting{
-    position: relative;
-    margin-left: 2%;
-    font-size: 2rem;
-    font-weight: bolder;
-
-}
-
-#mic{
-    color: red;
-    margin-top: -15%;
-    margin-left: 50%;
-}
-
-
-#video{
-    color: red;
-    margin-top: -16%;
-    margin-left: 68%;
-}
-
-#setting{
-    color: black;
-    margin-top: -16%;
-    margin-left: 88%;
-}
-
-.NotelistBox {
-    position: fixed;
-}
-
-#mic,
-#video,
-#setting {
-    position: relative;
-    margin-left: 2%;
-    font-size: 2rem;
-    font-weight: bolder;
-
-}
-
-#mic {
-    color: red;
-    margin-top: -15%;
-    margin-left: 50%;
-}
-
-
-#video {
-    color: red;
-    margin-top: -16%;
-    margin-left: 68%;
-}
-
-#setting {
-    color: black;
-    margin-top: -16%;
-    margin-left: 88%;
 }

@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../Join.css';
@@ -67,6 +68,7 @@ function Join() {
         </div>
       </div>
     );
+
 }
 
 export default Join;

@@ -13,8 +13,10 @@ function Login() {
 
   // 로그인 시도를 처리하는 함수입니다.
   const handleLogin = async () => {
+
     try {
       const response = await fetch('http://127.0.0.1:8000/login/', {
+
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -24,6 +26,7 @@ function Login() {
           password,
         }),
       });
+
   
       const data = await response.json();  // 서버로부터 응답을 JSON 형태로 받습니다.
   
@@ -38,6 +41,11 @@ function Login() {
       } else if (response.status === 401) {
         alert(data.error);  // 오류 메시지 출력
       } else {
+<<<<<<< HEAD
+=======
+        // 기타 오류 처리
+
+>>>>>>> 6cfd5178a37f591bb61c4f6b2ed1e9e1fcd7c88a
         alert('로그인 실패');
       }
     } catch (error) {
@@ -45,12 +53,14 @@ function Login() {
       alert('로그인 요청 중 에러 발생');
     }
   };
+
   
   
   // 회원가입 버튼 클릭을 처리하는 함수입니다.
   const handleJoinClick = () => {
     navigate('/join'); // 회원가입 페이지로 이동합니다.
   };
+
 
   return (
     <div className="Before"> {/* 메인 컨테이너 */}
@@ -59,8 +69,10 @@ function Login() {
         <logo><img src={logo} alt="로고"></img></logo> {/* 로고 */}
         <box2> {/* 이메일 입력을 위한 컨테이너 */}
           <input
+
             type="email"
             name="email"
+
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -70,7 +82,9 @@ function Login() {
         <box3> {/* 비밀번호 입력을 위한 컨테이너 */}
           <input
             type="password"
+
             name="password"
+
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}>
@@ -83,10 +97,17 @@ function Login() {
 
         <button id="kakaoButton" style={{color: '#7C7C7C'}}>카카오톡으로 로그인</button> {/* 카카오톡으로 로그인 버튼 */}
 
+<<<<<<< HEAD
         {/* 회원가입 버튼 */}
         <span id="joinButton" onClick={handleJoinClick}>회원가입</span>
         
         {/* 아이디 및 비밀번호 찾기 링크 */}
+=======
+
+        {/* 회원가입 버튼을 버튼으로 구현 */}
+        <span id="joinButton" onClick={handleJoinClick}>회원가입</span>
+
+>>>>>>> 6cfd5178a37f591bb61c4f6b2ed1e9e1fcd7c88a
         <span onClick={handleLogin}>아이디 찾기</span>
         <span onClick={handleLogin}>비밀번호 찾기</span>
       </box>

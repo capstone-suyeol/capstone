@@ -23,7 +23,9 @@ logo {
     top: 248px;
 }
 
+
 input[type="email"][name="email"] {
+
     margin-top: 20px;
     margin-left: 35px;
     display: flex;
@@ -41,7 +43,9 @@ input[type="email"][name="email"] {
     border: none;
 }
 
+
 input[type="password"][name="password"] {
+
     margin-top: 20px;
     margin-left: 35px;
     display: flex;

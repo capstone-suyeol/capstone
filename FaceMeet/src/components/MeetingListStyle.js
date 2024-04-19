@@ -5,7 +5,7 @@ import { grey } from '@mui/material/colors';
 // 활성화 된 버튼 색상 변경 안됨
 // 로그인한 유저 프로필 데이터 X
 
-function MeetingListStyle({ title, avafar, isSelected, onClick = () => {} }) {
+function MeetingListStyle({ title, avafar, isSelected, onClick = () => { } }) {
     const handleButtonClick = () => {
         if (typeof onClick === 'function') {
             onClick(); // 함수인 경우에만 호출
@@ -56,6 +56,13 @@ function MeetingListStyle({ title, avafar, isSelected, onClick = () => {} }) {
 }
 
 export default MeetingListStyle;
+
+
+
+
+
+
+
 
 
 

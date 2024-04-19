@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import '../Join.css'; // 스타일 파일 임포트
+import { useNavigate } from 'react-router-dom';
+import '../Join.css';
 import background from '../login_background.png';
 
 function Join() {
     const [email, setEmail] = useState('');
     const [nickname, setNickname] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate();  // 페이지 이동을 위한 navigate 함수
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -28,7 +30,10 @@ function Join() {
             });
             const data = await response.json();
             if (response.status === 201) {
-                alert('회원가입 성공!');
+                // 회원가입 성공 알림과 함께 로그인 페이지로 이동 여부 확인
+                if (window.confirm('회원가입 성공! 로그인 하시겠습니까?')) {
+                    navigate('/login');  // 로그인 페이지로 이동
+                }
             } else {
                 alert(`회원가입 실패: ${data.error}`);
             }
@@ -60,7 +65,7 @@ function Join() {
                 <button type="submit">회원가입</button>
             </form>
         </div>
-        </div>
+      </div>
     );
 }
 

@@ -82,6 +82,7 @@ class Meeting(models.Model):
     comments = models.TextField()  # 회의에 대한 코멘트
     atmosphere_score = models.FloatField()  # 분위기 점수
     transcription = models.TextField(blank=True, null=True)  # 음성 인식을 통해 생성된 회의록
+    meeting_id = models.CharField(max_length = 100)
 
 # 참가자 모델
 class Participant(models.Model):

@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import '../Join.css'; // 스타일 파일 임포트
 import background from '../login_background.png';
@@ -62,6 +63,7 @@ function Join() {
         </div>
         </div>
     );
+
 }
 
 export default Join;

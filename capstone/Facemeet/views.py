@@ -9,7 +9,10 @@ from rest_framework.response import Response
 from django.contrib.auth.hashers import make_password
 from .serializers import CustomUserSerializer
 from .models import CustomUser, CustomUserManager
-
+from rest_framework import status
+from rest_framework.decorators import action
+from django.shortcuts import get_object_or_404
+from django.db.models import Q
 
 @api_view(['POST'])
 def register_user(request):
@@ -71,7 +74,58 @@ class ParticipantViewSet(viewsets.ModelViewSet):
 class FriendViewSet(viewsets.ModelViewSet):
     queryset = Friend.objects.all()
     serializer_class = FriendSerializer
+    @action(detail=False, methods=['post'])
+    def send_request(self, request):
+        requester_id = request.data.get('requester_id')
+        receiver_id = request.data.get('receiver_id')
+        
+        if not requester_id or not receiver_id:
+            return Response({'error': 'Missing requester or receiver information'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        # Ensure both users exist
+        requester = get_object_or_404(CustomUser, id=requester_id)
+        receiver = get_object_or_404(CustomUser, id=receiver_id)
+        
+        # Check if a friend request already exists
+        if Friend.objects.filter(requester=requester, receiver=receiver).exists():
+            return Response({'error': 'Friend request already sent'}, status=status.HTTP_409_CONFLICT)
+        
+        # Create new friend request
+        friend_request = Friend(requester=requester, receiver=receiver, status=False)  # status=False indicates pending
+        friend_request.save()
+        
+        return Response({'message': 'Friend request sent successfully'}, status=status.HTTP_201_CREATED)
+    @action(detail=True, methods=['post'])
+    def accept_request(self, request, pk=None):
+        # 친구 요청 수락 로직 구현
+        friend_request = self.get_object()
+        friend_request.status = True
+        friend_request.save()
+        return Response({"message": "Friend request accepted"}, status=status.HTTP_200_OK)
+    
+    @action(detail=False, methods=['get'], url_path='my-friends')
+    def list_friends(self, request):
+        user = request.user
+        if not user.is_authenticated:
+            return Response({'error': 'Authentication required'}, status=status.HTTP_401_UNAUTHORIZED)
 
+        # Get all friends where the current user is either the requester or the receiver and the status is True
+        friends = Friend.objects.filter(
+            Q(requester=user, status=True) | Q(receiver=user, status=True)
+        )
+
+        # Serialize the friend relationships
+        friends_data = self.get_serializer(friends, many=True).data
+        # Extract the friend details
+        friend_list = []
+        for friend in friends_data:
+            if friend['requester']['id'] == user.id:
+                friend_list.append(friend['receiver'])
+            else:
+                friend_list.append(friend['requester'])
+
+        return Response({'friends': friend_list}, status=status.HTTP_200_OK)
 class RecordingFileViewSet(viewsets.ModelViewSet):
     queryset = RecordingFile.objects.all()
     serializer_class = RecordingFileSerializer
+

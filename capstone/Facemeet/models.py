@@ -50,7 +50,15 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = ['nickname']  # 필수 필드로 닉네임 지정
 
     objects = CustomUserManager()  # 사용자 모델 관리자 설정
-
+    
+    def get_friends(self):
+        """
+        현재 사용자의 친구 목록을 반환합니다.
+        """
+        friends = Friend.objects.filter(requester=self, status=True)
+        friend_users = [friend.receiver for friend in friends]
+        return friend_users
+    
     # 사용자 인증 관련 메서드
     @property
     def is_anonymous(self):
@@ -73,6 +81,8 @@ class Meeting(models.Model):
     expression_score = models.IntegerField()  # 표현 점수
     comments = models.TextField()  # 회의에 대한 코멘트
     atmosphere_score = models.FloatField()  # 분위기 점수
+    transcription = models.TextField(blank=True, null=True)  # 음성 인식을 통해 생성된 회의록
+    meeting_id = models.CharField(max_length = 100)
 
 # 참가자 모델
 class Participant(models.Model):
@@ -81,12 +91,17 @@ class Participant(models.Model):
     join_time = models.DateTimeField()  # 참여 시간
     leave_time = models.DateTimeField()  # 퇴장 시간
     status = models.BooleanField()  # 참가 상태
+    engagement_score = models.FloatField(default=0.0)  # 참가자의 참여도 점수
+    mood_score = models.FloatField(default=0.0)  # 참가자의 기분 점수
 
 # 친구 모델
 class Friend(models.Model):
     requester = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='requested_friends', on_delete=models.CASCADE)  # 친구 요청자
     receiver = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='received_friends', on_delete=models.CASCADE)  # 친구 요청 받는 사람
     status = models.BooleanField()  # 친구 관계 상태
+    class Meta:
+        unique_together = ['requester', 'receiver']  # 중복된 친구 요청 방지
+
 
 # 녹화 파일 모델
 class RecordingFile(models.Model):
@@ -95,3 +110,16 @@ class RecordingFile(models.Model):
     file_path = models.FileField(upload_to='meeting_recordings/')  # 파일 경로
     size = models.FloatField()  # 파일 크기
     creation_time = models.DateTimeField()  # 파일 생성 시간
+
+class ExpressionScore(models.Model):
+    meeting = models.ForeignKey(Meeting, on_delete=models.CASCADE, related_name='expression_scores')
+    timestamp = models.DateTimeField()  # 점수가 기록된 시간
+    score = models.IntegerField()  # 표정 점수
+
+class VoiceTranscription(models.Model):
+    meeting = models.ForeignKey(Meeting, on_delete=models.CASCADE, related_name='voice_transcriptions')
+    timestamp = models.DateTimeField()  # 텍스트가 기록된 시간
+    text = models.TextField()  # 인식된 음성의 텍스트
+
+
+

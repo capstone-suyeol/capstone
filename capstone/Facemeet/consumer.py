@@ -6,7 +6,6 @@ class MeetingConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         self.meeting_id = self.scope['url_route']['kwargs']['meeting_id']
         self.meeting_group_name = 'meeting_%s' % self.meeting_id
-
         # Join meeting group
         await self.channel_layer.group_add(
             self.meeting_group_name,

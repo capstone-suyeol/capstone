@@ -59,8 +59,8 @@ function Login() {
 
 
   return (
-    <div className="Before" style={{position: 'flex'}}> {/* 메인 컨테이너 */}
-      <img src={background} alt="로그인 배경 이미지" style={{height: "46.3rem", width: "100%", overflowY: "hidden",}}/> {/* 배경 이미지 */}
+    <div className="Before" style={{position: 'flex', alignItems: "center"}}> {/* 메인 컨테이너 */}
+      <img src={background} alt="로그인 배경 이미지" style={{height: "100%", width: "100%", alignItems: "center"}}/> {/* 배경 이미지 */}
       <box> {/* 로그인 폼을 위한 컨테이너 */}
         <logo><img src={logo} alt="로고"></img></logo> {/* 로고 */}
         <box2> {/* 이메일 입력을 위한 컨테이너 */}

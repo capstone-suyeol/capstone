@@ -60,10 +60,10 @@ function Profile() {
             [name]: value
         }));
     };
-
+    const userId = localStorage.getItem('user_id'); // Retrieve the user ID from local storage
     const handleSave = async () => {
         try {
-            const response = await fetch(`http://127.0.0.1:8000/api/users/1/`, {
+            const response = await fetch(`http://127.0.0.1:8000/api/users/${userId}/`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',

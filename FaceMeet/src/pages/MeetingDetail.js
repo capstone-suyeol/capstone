@@ -1,14 +1,32 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import '../components/Style.css';
 
 function MeetingDetail() {
-
+  const [ws, setWs] = useState(null);
+  const [messages, setMessages] = useState([]);
   // 데어터 전달 X 레이아웃만 잡아둠
+
+  useEffect(() => {
+    const websocket = new WebSocket("ws://my-django-app.com/ws/chat/");
+    setWs(websocket);
+  }, []);
+
+  useEffect(() => {
+    if (ws) {
+      ws.onmessage = function (event) {
+        const message = JSON.parse(event.data).message;
+        setMessages(prevMessages => [...prevMessages, message]);
+      };
+    }
+  }, [ws]);
 
   return (
 
     <div>
-      <div className='Chatting'>채팅 (리스트로 뿌리기) </div>
+      <div className='Chatting'>
+        {messages.map((message, index) => (
+        <div key={index}>{message}</div>
+      ))} </div>
       <div className='Score'>분위기점수</div>
       <div className='Camera'>카메라
         <div className='두명1 '> 두 명일 때 </div>

@@ -59,8 +59,8 @@ function Login() {
 
 
   return (
-    <div className="Before"> {/* 메인 컨테이너 */}
-      <img src={background} alt="로그인 배경 이미지" /> {/* 배경 이미지 */}
+    <div className="Before" style={{position: 'flex'}}> {/* 메인 컨테이너 */}
+      <img src={background} alt="로그인 배경 이미지" style={{height: "46.3rem", width: "100%", overflowY: "hidden",}}/> {/* 배경 이미지 */}
       <box> {/* 로그인 폼을 위한 컨테이너 */}
         <logo><img src={logo} alt="로고"></img></logo> {/* 로고 */}
         <box2> {/* 이메일 입력을 위한 컨테이너 */}
@@ -87,17 +87,14 @@ function Login() {
           </input>
         </box3>
 
-        <button id="idButton" style={{color: '#7C7C7C'}} onClick={handleLogin}>로그인</button> {/* 로그인 버튼 */}
+        <button id="idButton" style={{color: '#7C7C7C', fontSize: '0.8rem'}} onClick={handleLogin}>로그인</button> {/* 로그인 버튼 */}
 
         <text1>______________  또는  ______________</text1> {/* 또는 구분선 */}
 
         <button id="kakaoButton" style={{color: '#7C7C7C'}}>카카오톡으로 로그인</button> {/* 카카오톡으로 로그인 버튼 */}
 
 
-        {/* 회원가입 버튼 */}
-        <span id="joinButton" onClick={handleJoinClick}>회원가입</span>
-        
-        {/* 아이디 및 비밀번호 찾기 링크 */}
+
         <span onClick={handleLogin}>아이디 찾기</span>
         <span onClick={handleLogin}>비밀번호 찾기</span>
       </box>

@@ -8,6 +8,8 @@ router.register(r'meetings', views.MeetingViewSet)
 router.register(r'participants', views.ParticipantViewSet)
 router.register(r'friends', views.FriendViewSet)
 router.register(r'recordingfiles', views.RecordingFileViewSet)
+router.register(r'Voicetransciption',views.VoicetranscriptionViewSet)
+router.register(r'ExpressionScore',views.ExpressionScoreViewSet)
 
 urlpatterns = [
     path('api/', include(router.urls)),

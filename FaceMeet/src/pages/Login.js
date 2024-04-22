@@ -41,6 +41,7 @@ function Login() {
       } else if (response.status === 401) {
         alert(data.error);  // 오류 메시지 출력
       } else {
+
         alert('로그인 실패');
       }
     } catch (error) {
@@ -92,10 +93,8 @@ function Login() {
 
         <button id="kakaoButton" style={{color: '#7C7C7C'}}>카카오톡으로 로그인</button> {/* 카카오톡으로 로그인 버튼 */}
 
-
-        {/* 회원가입 버튼을 버튼으로 구현 */}
-        <span id="joinButton" onClick={handleJoinClick}>회원가입</span>
-
+        
+        <span onClick={handleJoinClick}>회원가입</span>
         <span onClick={handleLogin}>아이디 찾기</span>
         <span onClick={handleLogin}>비밀번호 찾기</span>
       </box>

@@ -1,0 +1,56 @@
+.Profile {
+    position: relative; /* 요소들의 상대적인 위치를 지정하기 위한 부모 요소 */
+    padding: 50px;
+    background: #818181; /* 전체 배경색 */
+    border-radius: 20px; /* 테두리 둥글게 */
+}
+
+.Profile h1 {
+    width: 100%;
+    text-align: center;
+    background: #4EE080; /* 헤더 배경색 */
+    color: white;
+    font-size: 40px;
+    padding: 20px 0;
+    border-radius: 20px 20px 0 0; /* 위쪽 테두리만 둥글게 */
+}
+
+.Profile button {
+    background-color: #4EE080;
+    color: white;
+    font-size: 20px;
+    border: none;
+    cursor: pointer;
+    padding: 10px 20px;
+    margin: 10px;
+    border-radius: 10px; /* 버튼 둥글게 */
+}
+
+.Profile button:hover {
+    background-color: #3dac64; /* 버튼 호버 색상 변경 */
+}
+
+.Profile .text-input {
+    display: block;
+    width: 90%; /* 입력 필드 너비 */
+    padding: 10px;
+    margin: 10px auto; /* 중앙 정렬 */
+    background-color: #D9D9D9; /* 입력 필드 배경색 */
+    color: #333;
+    border-radius: 10px; /* 입력 필드 둥글게 */
+    border: none;
+    font-size: 16px;
+}
+
+.Profile label {
+    display: block;
+    margin: 10px;
+    color: white; /* 레이블 텍스트 색상 */
+    font-size: 20px;
+}
+
+.Profile div {
+    background: #B6B6B6; /* 섹션 배경색 */
+    padding: 20px;
+    border-radius: 20px; /* 섹션 테두리 둥글게 */
+}

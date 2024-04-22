@@ -93,8 +93,8 @@ function Login() {
 
         <button id="kakaoButton" style={{color: '#7C7C7C'}}>카카오톡으로 로그인</button> {/* 카카오톡으로 로그인 버튼 */}
 
-
-
+        
+        <span onClick={handleJoinClick}>회원가입</span>
         <span onClick={handleLogin}>아이디 찾기</span>
         <span onClick={handleLogin}>비밀번호 찾기</span>
       </box>

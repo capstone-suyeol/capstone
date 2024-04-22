@@ -33,7 +33,7 @@ function Join() {
             if (response.status === 201) {
                 // 회원가입 성공 알림과 함께 로그인 페이지로 이동 여부 확인
                 if (window.confirm('회원가입 성공! 로그인 하시겠습니까?')) {
-                    navigate('/login');  // 로그인 페이지로 이동
+                    navigate('/');  // 로그인 페이지로 이동
                 }
             } else {
                 alert(`회원가입 실패: ${data.error}`);

@@ -37,7 +37,7 @@ function Login() {
         localStorage.setItem('user_id', userID); // 사용자 ID를 로컬 스토리지에 저장
         localStorage.setItem('access_token', data.access);  // 액세스 토큰을 로컬 스토리지에 저장
         localStorage.setItem('refresh_token', data.refresh);  // 리프레시 토큰을 로컬 스토리지에 저장
-        navigate('/');  // 홈페이지로 이동
+        navigate('/Home');  // 홈페이지로 이동
       } else if (response.status === 401) {
         alert(data.error);  // 오류 메시지 출력
       } else {

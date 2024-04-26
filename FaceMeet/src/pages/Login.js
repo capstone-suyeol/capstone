@@ -37,7 +37,7 @@ function Login() {
         localStorage.setItem('user_id', userID); // 사용자 ID를 로컬 스토리지에 저장
         localStorage.setItem('access_token', data.access);  // 액세스 토큰을 로컬 스토리지에 저장
         localStorage.setItem('refresh_token', data.refresh);  // 리프레시 토큰을 로컬 스토리지에 저장
-        navigate('/');  // 홈페이지로 이동
+        navigate('/Home');  // 홈페이지로 이동
       } else if (response.status === 401) {
         alert(data.error);  // 오류 메시지 출력
       } else {
@@ -59,8 +59,8 @@ function Login() {
 
 
   return (
-    <div className="Before" style={{position: 'flex'}}> {/* 메인 컨테이너 */}
-      <img src={background} alt="로그인 배경 이미지" style={{height: "46.3rem", width: "100%", overflowY: "hidden",}}/> {/* 배경 이미지 */}
+    <div className="Before" style={{position: 'flex', alignItems: "center"}}> {/* 메인 컨테이너 */}
+      <img src={background} alt="로그인 배경 이미지" style={{height: "100%", width: "100%", alignItems: "center"}}/> {/* 배경 이미지 */}
       <box> {/* 로그인 폼을 위한 컨테이너 */}
         <logo><img src={logo} alt="로고"></img></logo> {/* 로고 */}
         <box2> {/* 이메일 입력을 위한 컨테이너 */}
@@ -93,8 +93,8 @@ function Login() {
 
         <button id="kakaoButton" style={{color: '#7C7C7C'}}>카카오톡으로 로그인</button> {/* 카카오톡으로 로그인 버튼 */}
 
-
-
+        
+        <span onClick={handleJoinClick}>회원가입</span>
         <span onClick={handleLogin}>아이디 찾기</span>
         <span onClick={handleLogin}>비밀번호 찾기</span>
       </box>

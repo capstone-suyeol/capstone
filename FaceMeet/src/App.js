@@ -20,8 +20,8 @@ function App() {
     <Suspense fallback={<Home />}>
 
         <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path='/Login' element={<Login />} />
+          <Route path='/' element={<Login />} />
+          <Route path='/Home' element={<Home />} />
           <Route path='/Join' element={<Join />} />
           <Route path='/NoteList' element={<NoteList />} /> {/* db 연동 할 땐 NoteList/:_id로 변경해야함*/}
           <Route path='/Profile' element={<Profile />} /> {/* db 연동 할 땐 NoteList/:_id로 변경해야함*/}

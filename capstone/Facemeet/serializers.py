@@ -2,7 +2,7 @@
 # ModelSerializer를 사용하면 모델 인스턴스를 JSON으로 쉽게 변환하고 그 반대도 가능합니다.
 from rest_framework import serializers
 # 현재 패키지의 models 모듈에서 CustomUser, Meeting, Participant, Friend, RecordingFile 모델을 임포트합니다.
-from .models import CustomUser, Meeting, Participant, Friend, RecordingFile
+from .models import CustomUser, Meeting, Participant, Friend, RecordingFile,ExpressionScore,VoiceTranscription
 
 # CustomUser 모델을 위한 시리얼라이저를 정의합니다.
 class CustomUserSerializer(serializers.ModelSerializer):
@@ -32,4 +32,14 @@ class FriendSerializer(serializers.ModelSerializer):
 class RecordingFileSerializer(serializers.ModelSerializer):
     class Meta:
         model = RecordingFile  # 이 시리얼라이저가 사용할 모델을 지정합니다.
+        fields = '__all__'  # 모델의 모든 필드를 포함하도록 지정합니다.
+
+class ExpressionscoreSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ExpressionScore  # 이 시리얼라이저가 사용할 모델을 지정합니다.
+        fields = '__all__'  # 모델의 모든 필드를 포함하도록 지정합니다.
+
+class VoicetranscriptionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = VoiceTranscription  # 이 시리얼라이저가 사용할 모델을 지정합니다.
         fields = '__all__'  # 모델의 모든 필드를 포함하도록 지정합니다.

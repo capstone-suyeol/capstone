@@ -9,7 +9,10 @@ from rest_framework.response import Response
 from django.contrib.auth.hashers import make_password
 from .serializers import CustomUserSerializer
 from .models import CustomUser, CustomUserManager
-
+from rest_framework import status
+from rest_framework.decorators import action
+from django.shortcuts import get_object_or_404
+from django.db.models import Q
 
 @api_view(['POST'])
 def register_user(request):
@@ -53,8 +56,8 @@ def login_user(request):
         return Response({'error': '이메일 또는 비밀번호가 잘못되었습니다.'}, status=status.HTTP_401_UNAUTHORIZED)
 
 from rest_framework import viewsets
-from .models import CustomUser, Meeting, Participant, Friend, RecordingFile
-from .serializers import CustomUserSerializer, MeetingSerializer, ParticipantSerializer, FriendSerializer, RecordingFileSerializer
+from .models import CustomUser, Meeting, Participant, Friend, RecordingFile,ExpressionScore,VoiceTranscription
+from .serializers import CustomUserSerializer, MeetingSerializer, ParticipantSerializer, FriendSerializer, RecordingFileSerializer,ExpressionscoreSerializer,VoicetranscriptionSerializer
 
 class CustomUserViewSet(viewsets.ModelViewSet):
     queryset = CustomUser.objects.all()
@@ -64,6 +67,27 @@ class MeetingViewSet(viewsets.ModelViewSet):
     queryset = Meeting.objects.all()
     serializer_class = MeetingSerializer
 
+    @action(detail=False, methods=['GET'])
+    def get_user_meetings(request):
+        user = request.user
+        if not user.is_authenticated:
+            return Response({'error': 'Authentication required'}, status=status.HTTP_401_UNAUTHORIZED)
+        
+        # 사용자가 호스트인 회의 조회
+        hosted_meetings = Meeting.objects.filter(host=user)
+        
+        # 사용자가 참가자인 회의 조회
+        participant_meetings = Meeting.objects.filter(participants=user)
+        
+        # 중복을 제거하고 합치기
+        all_meetings = hosted_meetings | participant_meetings
+        all_meetings = all_meetings.distinct()
+
+        # 회의 정보를 직렬화하여 반환
+        serializer = MeetingSerializer(all_meetings, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+
 class ParticipantViewSet(viewsets.ModelViewSet):
     queryset = Participant.objects.all()
     serializer_class = ParticipantSerializer
@@ -72,6 +96,68 @@ class FriendViewSet(viewsets.ModelViewSet):
     queryset = Friend.objects.all()
     serializer_class = FriendSerializer
 
+    @action(detail=False, methods=['post'])
+    def send_request(self, request):
+        requester_id = request.data.get('requester_id')
+        receiver_id = request.data.get('receiver_id')
+        
+        if not requester_id or not receiver_id:
+            return Response({'error': 'Missing requester or receiver information'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        # Ensure both users exist
+        requester = get_object_or_404(CustomUser, id=requester_id)
+        receiver = get_object_or_404(CustomUser, id=receiver_id)
+        
+        # Check if a friend request already exists
+        if Friend.objects.filter(requester=requester, receiver=receiver).exists():
+            return Response({'error': 'Friend request already sent'}, status=status.HTTP_409_CONFLICT)
+        
+        # Create new friend request
+        friend_request = Friend(requester=requester, receiver=receiver, status=False)  # status=False indicates pending
+        friend_request.save()
+        
+        return Response({'message': 'Friend request sent successfully'}, status=status.HTTP_201_CREATED)
+    @action(detail=True, methods=['post'])
+    def accept_request(self, request, pk=None):
+        # 친구 요청 수락 로직 구현
+        friend_request = self.get_object()
+        friend_request.status = True
+        friend_request.save()
+        return Response({"message": "Friend request accepted"}, status=status.HTTP_200_OK)
+    
+    @action(detail=False, methods=['get'], url_path='my-friends')
+    def list_friends(self, request):
+        user = request.user
+        if not user.is_authenticated:
+            return Response({'error': 'Authentication required'}, status=status.HTTP_401_UNAUTHORIZED)
+
+        # Get all friends where the current user is either the requester or the receiver and the status is True
+        friends = Friend.objects.filter(
+            Q(requester=user, status=True) | Q(receiver=user, status=True)
+        )
+
+        # Serialize the friend relationships
+        friends_data = self.get_serializer(friends, many=True).data
+        # Extract the friend details
+        friend_list = []
+        for friend in friends_data:
+            if friend['requester']['id'] == user.id:
+                friend_list.append(friend['receiver'])
+            else:
+                friend_list.append(friend['requester'])
+
+        return Response({'friends': friend_list}, status=status.HTTP_200_OK)
+    
 class RecordingFileViewSet(viewsets.ModelViewSet):
     queryset = RecordingFile.objects.all()
     serializer_class = RecordingFileSerializer
+
+
+class ExpressionScoreViewSet(viewsets.ModelViewSet):
+    queryset = ExpressionScore.objects.all()
+    serializer_class = ExpressionscoreSerializer
+
+class VoicetranscriptionViewSet(viewsets.ModelViewSet):
+    queryset = VoiceTranscription.objects.all()
+    serializer_class = VoicetranscriptionSerializer
+

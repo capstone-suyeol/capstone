@@ -3,13 +3,12 @@ import Layout from '../components/Layout';
 import '../components/Style.css';
 import { AiFillVideoCamera, AiOutlinePlus, AiOutlineFileSearch } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 
 // 모달창 데이터 전달 X
 // 스타일 정의 X ( 배경 흐리게 & 하나의 모달창만 뜰 수 있도록 설정)
 
+const Modal = ({ onClose, children }) => {
 
-const Modal = ({ onClose, onConfirm, children }) => {
     const modalStyle = {
         position: 'fixed',
         width: '15rem',
@@ -40,78 +39,31 @@ const Modal = ({ onClose, onConfirm, children }) => {
         <div style={modalStyle}>
             {children}
             <button style={closeButtonStyle} onClick={onClose}>취소</button>
-            <button style={closeButtonStyle} onClick={onConfirm}>확인</button> 
+            <button style={closeButtonStyle}> 확인 </button>
         </div>
     );
 };
 
 
 const NewMeetingModal = ({ onClose }) => {
-    const [title, setTitle] = useState('');
-    const [meetingId, setMeetingId] = useState('');
-    const [password, setPassword] = useState('');
-    const [showConfirm, setShowConfirm] = useState(false);
-    const userId = localStorage.getItem('user_id'); // 현재 로그인된 사용자의 ID
-    const handleSubmit = async (event) => {
-        event.preventDefault();  // 폼의 기본 제출 동작을 방지
-        try {
-            const response = await axios.post('http://localhost:8000/api/meetings/', {
-                title: title,
-                meeting_id: meetingId,
-                password: password,
-                host : userId
-            });
-            console.log('Meeting created:', response.data);
-            setShowConfirm(true);
-        } catch (error) {
-            console.error('Error creating meeting:', error.response.data);
-        }
-    };
-
-    const handleConfirm = () => {
-        console.log('Meeting participation confirmed.');
-        onClose();
-    };
-
     return (
-        <Modal onClose={onClose} onConfirm={handleSubmit}>
+        <Modal onClose={onClose}>
             <p>새 회의 만들기</p>
-            <form onSubmit={handleSubmit}>
+            <form>
                 <p>Title</p>
                 <input
                     type='text'
-                    name='title'
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                />
+                    name='title'>
+                </input>
                 <p>Id</p>
                 <input
                     type='text'
-                    name='id'
-                    value={meetingId}
-                    onChange={(e) => setMeetingId(e.target.value)}
-                />
-                <p>Password</p>
-                <input
-                    type='password'
-                    name='password'
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
-                {/* 제출 버튼은 form 태그 내부에 있어야 합니다. */}
+                    name='id'>
+                </input>
             </form>
-            {showConfirm && (
-                <div style={{ marginTop: "20px" }}>
-                    <p>생성되었습니다! 참가하시겠습니까?</p>
-                    <button onClick={handleConfirm} style={{ marginRight: '10px' }}>예</button>
-                    <button onClick={onClose}>아니오</button>
-                </div>
-            )}
         </Modal>
     );
 };
-
-
 
 
 const AttendMeetingModal = ({ onClose }) => {

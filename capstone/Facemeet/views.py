@@ -56,8 +56,8 @@ def login_user(request):
         return Response({'error': '이메일 또는 비밀번호가 잘못되었습니다.'}, status=status.HTTP_401_UNAUTHORIZED)
 
 from rest_framework import viewsets
-from .models import CustomUser, Meeting, Participant, Friend, RecordingFile
-from .serializers import CustomUserSerializer, MeetingSerializer, ParticipantSerializer, FriendSerializer, RecordingFileSerializer
+from .models import CustomUser, Meeting, Participant, Friend, RecordingFile,ExpressionScore,VoiceTranscription
+from .serializers import CustomUserSerializer, MeetingSerializer, ParticipantSerializer, FriendSerializer, RecordingFileSerializer,ExpressionscoreSerializer,VoicetranscriptionSerializer
 
 class CustomUserViewSet(viewsets.ModelViewSet):
     queryset = CustomUser.objects.all()
@@ -67,6 +67,27 @@ class MeetingViewSet(viewsets.ModelViewSet):
     queryset = Meeting.objects.all()
     serializer_class = MeetingSerializer
 
+    @action(detail=False, methods=['GET'])
+    def get_user_meetings(request):
+        user = request.user
+        if not user.is_authenticated:
+            return Response({'error': 'Authentication required'}, status=status.HTTP_401_UNAUTHORIZED)
+        
+        # 사용자가 호스트인 회의 조회
+        hosted_meetings = Meeting.objects.filter(host=user)
+        
+        # 사용자가 참가자인 회의 조회
+        participant_meetings = Meeting.objects.filter(participants=user)
+        
+        # 중복을 제거하고 합치기
+        all_meetings = hosted_meetings | participant_meetings
+        all_meetings = all_meetings.distinct()
+
+        # 회의 정보를 직렬화하여 반환
+        serializer = MeetingSerializer(all_meetings, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+
 class ParticipantViewSet(viewsets.ModelViewSet):
     queryset = Participant.objects.all()
     serializer_class = ParticipantSerializer
@@ -74,6 +95,7 @@ class ParticipantViewSet(viewsets.ModelViewSet):
 class FriendViewSet(viewsets.ModelViewSet):
     queryset = Friend.objects.all()
     serializer_class = FriendSerializer
+
     @action(detail=False, methods=['post'])
     def send_request(self, request):
         requester_id = request.data.get('requester_id')
@@ -125,7 +147,17 @@ class FriendViewSet(viewsets.ModelViewSet):
                 friend_list.append(friend['requester'])
 
         return Response({'friends': friend_list}, status=status.HTTP_200_OK)
+    
 class RecordingFileViewSet(viewsets.ModelViewSet):
     queryset = RecordingFile.objects.all()
     serializer_class = RecordingFileSerializer
+
+
+class ExpressionScoreViewSet(viewsets.ModelViewSet):
+    queryset = ExpressionScore.objects.all()
+    serializer_class = ExpressionscoreSerializer
+
+class VoicetranscriptionViewSet(viewsets.ModelViewSet):
+    queryset = VoiceTranscription.objects.all()
+    serializer_class = VoicetranscriptionSerializer
 

@@ -73,11 +73,12 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 # 회의 모델
 class Meeting(models.Model):
     title = models.CharField(max_length=100)  # 회의 제목
-    description = models.CharField(max_length=100,null=True)  # 회의 설명
+    description = models.CharField(max_length=100, null=True)  # 회의 설명
     time = models.TimeField(null=True)  # 회의 시간
     host = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='hosted_meetings')  # 회의 주최자
+    participants = models.ManyToManyField(settings.AUTH_USER_MODEL, through='Participant', related_name='meetings')  # 참가자
     password = models.CharField(max_length=100)  # 회의 비밀번호
-    meeting_link = models.URLField(max_length=255,null=True)  # 회의 링크
+    meeting_link = models.URLField(max_length=255, null=True)  # 회의 링크
     expression_score = models.IntegerField(null=True)  # 표현 점수
     comments = models.TextField(null=True)  # 회의에 대한 코멘트
     atmosphere_score = models.FloatField(null=True)  # 분위기 점수
@@ -88,9 +89,9 @@ class Meeting(models.Model):
 class Participant(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)  # 참가자
     meeting = models.ForeignKey(Meeting, on_delete=models.CASCADE)  # 해당 참가자가 참여한 회의
-    join_time = models.DateTimeField()  # 참여 시간
-    leave_time = models.DateTimeField()  # 퇴장 시간
-    status = models.BooleanField()  # 참가 상태
+    join_time = models.DateTimeField(null=True)  # 참여 시간
+    leave_time = models.DateTimeField(null=True)  # 퇴장 시간
+    status = models.BooleanField(null=True)  # 참가 상태
     engagement_score = models.FloatField(default=0.0)  # 참가자의 참여도 점수
     mood_score = models.FloatField(default=0.0)  # 참가자의 기분 점수
 
@@ -98,7 +99,7 @@ class Participant(models.Model):
 class Friend(models.Model):
     requester = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='requested_friends', on_delete=models.CASCADE)  # 친구 요청자
     receiver = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='received_friends', on_delete=models.CASCADE)  # 친구 요청 받는 사람
-    status = models.BooleanField()  # 친구 관계 상태
+    status = models.BooleanField(null=True)  # 친구 관계 상태
     class Meta:
         unique_together = ['requester', 'receiver']  # 중복된 친구 요청 방지
 
@@ -113,13 +114,13 @@ class RecordingFile(models.Model):
 
 class ExpressionScore(models.Model):
     meeting = models.ForeignKey(Meeting, on_delete=models.CASCADE, related_name='expression_scores')
-    timestamp = models.DateTimeField()  # 점수가 기록된 시간
-    score = models.IntegerField()  # 표정 점수
+    timestamp = models.DateTimeField(null=True)  # 점수가 기록된 시간
+    score = models.IntegerField(null=True)  # 표정 점수
 
 class VoiceTranscription(models.Model):
     meeting = models.ForeignKey(Meeting, on_delete=models.CASCADE, related_name='voice_transcriptions')
-    timestamp = models.DateTimeField()  # 텍스트가 기록된 시간
-    text = models.TextField()  # 인식된 음성의 텍스트
+    timestamp = models.DateTimeField(null=True)  # 텍스트가 기록된 시간
+    text = models.TextField(null=True)  # 인식된 음성의 텍스트
 
 
 

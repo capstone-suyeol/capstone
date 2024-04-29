@@ -5,10 +5,18 @@ img {
 
 box {
     position: absolute;
+<<<<<<< HEAD
     width: 400px;
     height: 530px;
     left: 744px;
     top: 222px;
+=======
+    width: 25rem;
+    height: 27rem;
+    left: 35.2%;
+    right: 35.2%;
+    top: 18%;
+>>>>>>> fdfb8f3 (표정인식-음성텍스트변환 복구)
     margin: auto;
     padding: 20px;
     
@@ -17,15 +25,23 @@ box {
 }
 
 logo {
+<<<<<<< HEAD
     width: 186.5px;
     height: 90px;
     left: 862px;
     top: 248px;
+=======
+    width: 20%;
+    height: 30%;
+    left: 20%;
+    top: 20%;
+>>>>>>> fdfb8f3 (표정인식-음성텍스트변환 복구)
 }
 
 
 input[type="email"][name="email"] {
 
+<<<<<<< HEAD
     margin-top: 20px;
     margin-left: 35px;
     display: flex;
@@ -36,6 +52,18 @@ input[type="email"][name="email"] {
 
     width: 300px;
     height: 20px;
+=======
+    margin-top: 5%;
+    margin-left: 5%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 4% 4.5%;
+    gap: 2%;
+
+    width: 80%;
+    height: 5%;
+>>>>>>> fdfb8f3 (표정인식-음성텍스트변환 복구)
 
     background: #97F7B8;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -46,6 +74,7 @@ input[type="email"][name="email"] {
 
 input[type="password"][name="password"] {
 
+<<<<<<< HEAD
     margin-top: 20px;
     margin-left: 35px;
     display: flex;
@@ -56,6 +85,18 @@ input[type="password"][name="password"] {
 
     width: 300px;
     height: 20px;
+=======
+    margin-top: 6%;
+    margin-left: 5%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 4% 4.5%;
+    gap: 2%;
+
+    width: 80%;
+    height: 5%;
+>>>>>>> fdfb8f3 (표정인식-음성텍스트변환 복구)
 
     background: #97F7B8;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -64,6 +105,7 @@ input[type="password"][name="password"] {
 }
 
 #idButton {
+<<<<<<< HEAD
     margin-top: 20px;
     margin-left: 160px;
     margin-bottom: 20px;
@@ -75,6 +117,19 @@ input[type="password"][name="password"] {
 
     width: 80px;
     height: 40px;
+=======
+    margin-top: 6%;
+    margin-left: 43%;
+    margin-bottom: 3%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 5% ;
+    gap: 2%;
+
+    width: 21%;
+    height: 9%;
+>>>>>>> fdfb8f3 (표정인식-음성텍스트변환 복구)
 
     background: #97F7B8;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -89,22 +144,39 @@ input[type="password"][name="password"] {
 
 /* ______________  또는  ______________ */
 text1 {
+<<<<<<< HEAD
     margin-left: 95px;
+=======
+    margin-left: 23%;
+>>>>>>> fdfb8f3 (표정인식-음성텍스트변환 복구)
     color: #7C7C7C;
 }
 
 #kakaoButton {
+<<<<<<< HEAD
     margin-top: 20px;
     margin-left: 60px;
+=======
+    margin-top: 4%;
+    margin-left: 12%;
+>>>>>>> fdfb8f3 (표정인식-음성텍스트변환 복구)
     margin-bottom: 20px;
     display: flex;
     flex-direction: row;
     align-items: center;
+<<<<<<< HEAD
     padding: 20px 80px;
     gap: 8px;
 
     width: 300px;
     height: 40px;
+=======
+    padding: 3% 23.3%;
+    gap: 3%;
+
+    width: 80%;
+    height: 9%;
+>>>>>>> fdfb8f3 (표정인식-음성텍스트변환 복구)
 
     background: #FFE812;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -119,11 +191,25 @@ text1 {
 
 /* 회원가입  |  아이디 찾기  |  비밀번호 찾기 */
 span {
+<<<<<<< HEAD
     margin-left: 40px;
+=======
+    margin-left: 9.3%;
+>>>>>>> fdfb8f3 (표정인식-음성텍스트변환 복구)
     color: #7C7C7C;
     cursor: pointer;
 }
 
 span:hover {
     background: #a6a7a7;
+<<<<<<< HEAD
+=======
+}
+
+.Before {
+    display: flex;
+    flex-direction: column; /* 자식 요소들을 세로 방향으로 정렬 */
+    align-items: center; /* 수직으로 중앙 정렬 */
+    overflow: hidden;
+>>>>>>> fdfb8f3 (표정인식-음성텍스트변환 복구)
 }

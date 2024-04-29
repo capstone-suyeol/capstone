@@ -73,6 +73,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 # 회의 모델
 class Meeting(models.Model):
     title = models.CharField(max_length=100)  # 회의 제목
+<<<<<<< HEAD
     description = models.CharField(max_length=100)  # 회의 설명
     time = models.TimeField()  # 회의 시간
     host = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='hosted_meetings')  # 회의 주최자
@@ -81,6 +82,16 @@ class Meeting(models.Model):
     expression_score = models.IntegerField()  # 표현 점수
     comments = models.TextField()  # 회의에 대한 코멘트
     atmosphere_score = models.FloatField()  # 분위기 점수
+=======
+    description = models.CharField(max_length=100,null=True)  # 회의 설명
+    time = models.TimeField(null=True)  # 회의 시간
+    host = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='hosted_meetings')  # 회의 주최자
+    password = models.CharField(max_length=100)  # 회의 비밀번호
+    meeting_link = models.URLField(max_length=255,null=True)  # 회의 링크
+    expression_score = models.IntegerField(null=True)  # 표현 점수
+    comments = models.TextField(null=True)  # 회의에 대한 코멘트
+    atmosphere_score = models.FloatField(null=True)  # 분위기 점수
+>>>>>>> fdfb8f3 (표정인식-음성텍스트변환 복구)
     transcription = models.TextField(blank=True, null=True)  # 음성 인식을 통해 생성된 회의록
     meeting_id = models.CharField(max_length=100, default=uuid.uuid4().hex)  # UUID 기반 기본값
 

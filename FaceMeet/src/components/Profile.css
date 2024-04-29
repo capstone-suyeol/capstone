@@ -1,11 +1,17 @@
 .Profile {
+<<<<<<< HEAD
     position: relative; /* 요소들의 상대적인 위치를 지정하기 위한 부모 요소 */
     padding: 50px;
+=======
+    position: absolute; /* 요소들의 상대적인 위치를 지정하기 위한 부모 요소 */
+    width: 95%;
+>>>>>>> fdfb8f3 (표정인식-음성텍스트변환 복구)
     background: #818181; /* 전체 배경색 */
     border-radius: 20px; /* 테두리 둥글게 */
 }
 
 .Profile h1 {
+<<<<<<< HEAD
     width: 100%;
     text-align: center;
     background: #4EE080; /* 헤더 배경색 */
@@ -17,11 +23,48 @@
 
 .Profile button {
     background-color: #4EE080;
+=======
+    position: absolute;
+    color: #ffffff; /* 텍스트 색상 */
+    font-size: 30px; /* 텍스트 크기 */
+    font-weight: bold; /* 텍스트 굵기 */
+    left: 18rem;
+}
+
+.Profile .header {
+    background: #4EE080;
+    border-radius: 20px 20px 0 0; /* 위쪽 테두리만 둥글게 */
+    height: 5rem;
+}
+
+.Profile .information {
+    background: #B6B6B6; /* 섹션 배경색 */
+    padding: 1rem;
+    margin: 7rem 1rem 1rem 1rem;
+    border-radius: 20px; /* 섹션 테두리 둥글게 */
+}
+
+.Profile .picture {
+    position: absolute;
+    background: #e1e0e0;
+    border-radius: 50%; /* 위쪽 테두리만 둥글게 */
+    height: 12rem;
+    width: 12rem;
+    left: 4rem;
+    top: 1rem;
+    z-index: 9999;
+}
+
+.Profile .save {
+    position: absolute;
+    background-color: #fa9018;
+>>>>>>> fdfb8f3 (표정인식-음성텍스트변환 복구)
     color: white;
     font-size: 20px;
     border: none;
     cursor: pointer;
     padding: 10px 20px;
+<<<<<<< HEAD
     margin: 10px;
     border-radius: 10px; /* 버튼 둥글게 */
 }
@@ -54,3 +97,47 @@
     padding: 20px;
     border-radius: 20px; /* 섹션 테두리 둥글게 */
 }
+=======
+    border-radius: 10px; /* 버튼 둥글게 */
+    right: 1rem;
+    top: 11rem;
+}
+
+.Profile .save:hover {
+    background-color: #bf6c0d; /* 호버 시 배경색 변경 */
+}
+
+.Profile .picture-button {
+    position: relative;
+    background-color: #4EE080;
+    color: white;
+    font-size: 20px;
+    border: none;
+    cursor: pointer;
+    padding: 5px 10px;
+    margin-right: 1rem;
+    border-radius: 10px; /* 버튼 둥글게 */
+    left: 17rem;
+    top: 5rem;
+}
+
+.Profile .picture-button:hover {
+    background-color: #2a9551; /* 호버 시 배경색 변경 */
+}
+
+.Profile .text-input {
+    padding: 10px;
+    background-color: #818181; /* 입력 필드 배경색 */
+    color: #ffffff;
+    border-radius: 10px; /* 입력 필드 둥글게 */
+    border: none;
+    font-size: 16px;
+    margin: 10px;
+}
+
+.Profile label {
+    color: white; /* 레이블 텍스트 색상 */
+    font-size: 20px;
+    font-weight: bold;
+}
+>>>>>>> fdfb8f3 (표정인식-음성텍스트변환 복구)

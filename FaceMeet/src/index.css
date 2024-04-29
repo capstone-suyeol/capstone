@@ -11,3 +11,10 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+<<<<<<< HEAD
+=======
+
+html, body {
+  overflow: hidden;
+}
+>>>>>>> fdfb8f3 (표정인식-음성텍스트변환 복구)

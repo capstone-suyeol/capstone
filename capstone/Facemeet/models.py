@@ -44,6 +44,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     nickname = models.CharField(max_length=100)  # 닉네임 필드
     password = models.CharField(max_length=100)  # 비밀번호 필드
     email = models.EmailField(max_length=255, unique=True)  # 이메일 필드, 유일해야 함
+    profileImage = models.ImageField(upload_to='images/',blank=True)
     is_staff = models.BooleanField(default=False)  # 관리자 페이지 접근 권한
     is_active = models.BooleanField(default=True)  # 계정 활성화 상태
     USERNAME_FIELD = 'email'  # 사용자 이름 필드로 이메일을 사용

@@ -79,6 +79,10 @@
     background-color: rgb(118, 237, 118);
     opacity: 40%;
 }
+.두명1 video {
+    width: 100%;  /* 비디오가 부모 컨테이너의 폭을 전체 채우도록 설정 */
+    height: 100%; /* 높이도 부모 컨테이너를 전체 채우도록 설정 */
+}
 
 .두명2 {
     position: fixed;

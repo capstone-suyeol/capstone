@@ -121,7 +121,7 @@ function Feed() {
 
                 {/* MeetingLogo Section (Top-left corner) */}
                 <Box component="section" sx={{ gridColumn: '1 / 2', gridRow: '1 / 2', display: 'flex', justifyContent: 'flex-start', alignItems: 'flex-start', marginLeft: '1rem', marginTop: '1rem' }}>
-                    <img src={MeetingLogo} alt="Meeting 로고" style={{ width: '14rem', height: '8rem', marginLeft: '5%' }} onClick={() => navigate('/Home')} />
+                    <img src={MeetingLogo} alt="Meeting 로고" style={{ width: '14rem', height: '8rem', marginLeft: '5%' }} onClick={() => navigate('/')} />
                 </Box>
 
                 <Box sx = {{ gridColumn: '2 / -1'}}>

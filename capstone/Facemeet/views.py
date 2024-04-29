@@ -67,26 +67,26 @@ class MeetingViewSet(viewsets.ModelViewSet):
     queryset = Meeting.objects.all()
     serializer_class = MeetingSerializer
 
-    @action(detail=False, methods=['GET'])
-    def get_user_meetings(request):
-        user = request.user
-        if not user.is_authenticated:
-            return Response({'error': 'Authentication required'}, status=status.HTTP_401_UNAUTHORIZED)
-        
+    @action(detail=False, methods=['GET'], url_path='user-meetings/(?P<user_id>\d+)')
+    def get_user_meetings(self, request, user_id=None):
+        """
+        특정 사용자 ID를 기반으로 사용자가 호스트이거나 참가자인 모든 회의를 조회합니다.
+        """
+        if not user_id:
+            return Response({'error': 'User ID is required'}, status=status.HTTP_400_BAD_REQUEST)
+
         # 사용자가 호스트인 회의 조회
-        hosted_meetings = Meeting.objects.filter(host=user)
+        hosted_meetings = Meeting.objects.filter(host_id=user_id)
         
         # 사용자가 참가자인 회의 조회
-        participant_meetings = Meeting.objects.filter(participants=user)
+        participant_meetings = Meeting.objects.filter(participants__id=user_id)
         
         # 중복을 제거하고 합치기
-        all_meetings = hosted_meetings | participant_meetings
-        all_meetings = all_meetings.distinct()
+        all_meetings = hosted_meetings.union(participant_meetings)
 
         # 회의 정보를 직렬화하여 반환
-        serializer = MeetingSerializer(all_meetings, many=True)
+        serializer = self.get_serializer(all_meetings, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
-    
 
 class ParticipantViewSet(viewsets.ModelViewSet):
     queryset = Participant.objects.all()

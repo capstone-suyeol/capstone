@@ -5,7 +5,7 @@ from channels.generic.websocket import AsyncWebsocketConsumer
 class VideoConferenceConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         # WebSocket 연결 시 실행
-        self.room_name = self.scope['url_route']['kwargs']['room_name']  # URL 경로에서 방 이름 추출
+        self.room_name = self.scope['url_route']['kwargs']['meeting_id']  # URL 경로에서 방 이름 추출
         self.room_group_name = 'room_%s' % self.room_name  # 채널 레이어에서 사용할 그룹 이름 설정
 
         # 방 그룹에 참여

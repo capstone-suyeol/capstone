@@ -12,6 +12,7 @@ const Profile = lazy(() => import('./pages/Profile'));
 const Friend = lazy(() => import('./pages/Friend'));
 const NoteDetail = lazy(() => import('./pages/NoteDetail'));
 const Testjang = lazy(() => import('./pages/Testjang'));
+const VideoTest = lazy(() => import('./pages/videoTest') )
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
           <Route path='/MeetingDetail/:_id' element={<MeetingDetail />} /> {/* db 연동 할 땐 MeetingDetail/:_id로 변경해야함*/}
           <Route path='/NoteDetail' element={<NoteDetail />} />{/* db 연동 할 땐 NoteDetail/:_id로 변경해야함*/}
           <Route path='/Testjang' element={<Testjang />} /> {/* 장고 테스트*/}
+          <Route path='/videoTest' element={<VideoTest/>}/>{/*video Test*/}
         </Routes>
 
     </Suspense>

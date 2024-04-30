@@ -115,6 +115,30 @@ const NewMeetingModal = ({ onClose }) => {
 
 
 const AttendMeetingModal = ({ onClose }) => {
+
+    const [meetingId, setMeetingId] = useState('');
+    const [password, setPassword] = useState('');
+    const [showConfirm, setShowConfirm] = useState(false);
+    const userId = localStorage.getItem('user_id'); // 현재 로그인된 사용자의 ID
+    const handleSubmit = async (event) => {
+        event.preventDefault();  // 폼의 기본 제출 동작을 방지
+        try {
+            const response = await axios.post('http://localhost:8000/api/meetings/', {
+                meeting_id: meetingId,
+                password: password,
+                host : userId
+            });
+            console.log('Meeting created:', response.data);
+            setShowConfirm(true);
+        } catch (error) {
+            console.error('Error creating meeting:', error.response.data);
+        }
+    };
+
+    const handleConfirm = () => {
+        console.log('Meeting participation confirmed.');
+        onClose();
+    };
     return (
         <Modal onClose={onClose}>
             <p>회의 참가하기</p>

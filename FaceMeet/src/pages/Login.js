@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import background from '../login_background.png'; // 배경 이미지를 가져옵니다.
 import logo from '../Logo.png'; // 로고 이미지를 가져옵니다.
-import '../Login.css'; // 스타일을 가져옵니다.
+import './Login.css'; // 스타일을 가져옵니다.
 import { useNavigate } from 'react-router-dom'; // 페이지 이동을 위한 훅을 가져옵니다.
 import { jwtDecode } from 'jwt-decode'; // jwt-decode 라이브러리에서 jwt_decode 함수 가져오기
 
@@ -27,9 +27,9 @@ function Login() {
         }),
       });
 
-  
+
       const data = await response.json();  // 서버로부터 응답을 JSON 형태로 받습니다.
-  
+
       if (response.ok) {
         const { access } = data; // 액세스 토큰 가져오기
         const tokenPayload = jwtDecode(access); // JWT 디코딩하여 페이로드 가져오기
@@ -50,8 +50,8 @@ function Login() {
     }
   };
 
-  
-  
+
+
   // 회원가입 버튼 클릭을 처리하는 함수입니다.
   const handleJoinClick = () => {
     navigate('/join'); // 회원가입 페이지로 이동합니다.
@@ -59,8 +59,9 @@ function Login() {
 
 
   return (
-    <div className="Before" style={{position: 'flex', alignItems: "center"}}> {/* 메인 컨테이너 */}
-      <img src={background} alt="로그인 배경 이미지" style={{height: "100%", width: "100%", alignItems: "center"}}/> {/* 배경 이미지 */}
+    <div className="Before" style={{ position: 'flex' }}> {/* 메인 컨테이너 */}
+      <img src={background} alt="로그인 배경 이미지" style={{ height: "46.3rem", width: "100%", overflowY: "hidden", }} /> {/* 배경 이미지 */}
+
       <box> {/* 로그인 폼을 위한 컨테이너 */}
         <logo><img src={logo} alt="로고"></img></logo> {/* 로고 */}
         <box2> {/* 이메일 입력을 위한 컨테이너 */}
@@ -87,13 +88,13 @@ function Login() {
           </input>
         </box3>
 
-        <button id="idButton" style={{color: '#7C7C7C', fontSize: '0.8rem'}} onClick={handleLogin}>로그인</button> {/* 로그인 버튼 */}
+        <button id="idButton" style={{ color: '#7C7C7C', fontSize: '0.8rem' }} onClick={handleLogin}>로그인</button> {/* 로그인 버튼 */}
 
         <text1>______________  또는  ______________</text1> {/* 또는 구분선 */}
 
-        <button id="kakaoButton" style={{color: '#7C7C7C'}}>카카오톡으로 로그인</button> {/* 카카오톡으로 로그인 버튼 */}
+        <button id="kakaoButton" style={{ color: '#7C7C7C' }}>카카오톡으로 로그인</button> {/* 카카오톡으로 로그인 버튼 */}
 
-        
+
         <span onClick={handleJoinClick}>회원가입</span>
         <span onClick={handleLogin}>아이디 찾기</span>
         <span onClick={handleLogin}>비밀번호 찾기</span>

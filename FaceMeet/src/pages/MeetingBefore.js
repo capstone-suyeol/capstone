@@ -124,7 +124,6 @@ const AttendMeetingModal = ({ onClose }) => {
         event.preventDefault();  // 폼의 기본 제출 동작을 방지
         try {
             const response = await axios.post('http://localhost:8000/api/meetings/', {
-                title: title,
                 meeting_id: meetingId,
                 password: password,
                 host : userId

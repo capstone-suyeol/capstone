@@ -1,4 +1,4 @@
-.custom-avatar {
+custom-avatar {
     width: 56px;
     height: 56px;
     border: 2px solid rgb(210, 209, 209);
@@ -33,13 +33,11 @@
     margin-right: 2rem;
     margin-bottom: 10px;
     box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.5);
-    /* 여백 설정 */
 }
 
 .green-box p {
     margin-top: 105px;
     overflow-y: auto;
-    /*영역이 부족할 때만 스크롤 허용*/
 }
 
 .Chatting {
@@ -80,8 +78,8 @@
     opacity: 40%;
 }
 .두명1 video {
-    width: 100%;  /* 비디오가 부모 컨테이너의 폭을 전체 채우도록 설정 */
-    height: 100%; /* 높이도 부모 컨테이너를 전체 채우도록 설정 */
+    width: 100%;
+    height: 100%;
 }
 
 .두명2 {
@@ -169,15 +167,12 @@
     margin-right: 2rem;
     margin-bottom: 10px;
     box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.5);
-    /* 여백 설정 */
 }
 
 .NoteList {
     position: fixed;
     display: flex;
-    /* Flexbox를 사용하여 자식 요소들을 가로로 배치합니다. */
     flex-direction: row;
-    /* 요소들을 가로로 나열합니다. 기본값은 세로로 나열되므로 설정이 필요합니다. */
     justify-content: space-around;
     background-color: rgb(206, 206, 206);
     margin-bottom: 40%;
@@ -212,18 +207,14 @@
     margin-left: 2%;
     font-size: 2rem;
     font-weight: bolder;
-
 }
 
 #mic {
-    color: red;
     margin-top: -15%;
     margin-left: 50%;
 }
 
-
 #video {
-    color: red;
     margin-top: -16%;
     margin-left: 68%;
 }
@@ -232,4 +223,17 @@
     color: black;
     margin-top: -16%;
     margin-left: 88%;
+}
+
+/* 아이콘 스타일 */
+.icon-wrapper {
+    position: relative;
+    font-size: 2rem;
+    font-weight: bolder;
+    color: black; /* 기본 아이콘 색상 */
+}
+
+/* 마이크와 비디오가 켜져 있을 때 아이콘 색상을 red로 설정합니다. */
+.icon-on {
+    color: red;
 }

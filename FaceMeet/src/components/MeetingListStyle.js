@@ -1,18 +1,32 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { Avatar, Button, Typography } from '@mui/material';
 import { grey } from '@mui/material/colors';
 
-// 활성화 된 버튼 색상 변경 안됨
-// 로그인한 유저 프로필 데이터 X
 
 function MeetingListStyle({ title, avafar, isSelected, onClick = () => { } }) {
-    const handleButtonClick = () => {
+    const [meetings, setMeetings] = useState([]);
+
+    useEffect(() => {
+        const userId = localStorage.getItem('user_id');
+        axios.get(`http://localhost:8000/api/meetings/user-meetings/${userId}/`)
+            .then(response => {
+                console.log(response.data)
+                setMeetings(response.data);
+            })
+            .catch(error => {
+                console.error('Error fetching meetings:', error);
+            });
+    }, []);
+
+    const handleButtonClick = (meeting_id) => {
         if (typeof onClick === 'function') {
             onClick(); // 함수인 경우에만 호출
             console.log(isSelected);
         }
-        window.open('/MeetingDetail', '_blank');
+        window.open(`/MeetingDetail/${meeting_id}`, '_blank');
     };
+
 
     return (
         <div>

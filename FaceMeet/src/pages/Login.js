@@ -35,6 +35,7 @@ function Login() {
         const tokenPayload = jwtDecode(access); // JWT 디코딩하여 페이로드 가져오기
         const userID = tokenPayload.user_id; // 사용자 ID 추출
         localStorage.setItem('user_id', userID); // 사용자 ID를 로컬 스토리지에 저장
+        localStorage.setItem('email', email);
         localStorage.setItem('access_token', data.access);  // 액세스 토큰을 로컬 스토리지에 저장
         localStorage.setItem('refresh_token', data.refresh);  // 리프레시 토큰을 로컬 스토리지에 저장
         navigate('/Home');  // 홈페이지로 이동

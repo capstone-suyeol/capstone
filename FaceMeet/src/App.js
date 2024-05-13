@@ -27,7 +27,7 @@ function App() {
           <Route path='/NoteList' element={<NoteList />} /> {/* db 연동 할 땐 NoteList/:_id로 변경해야함*/}
           <Route path='/Profile' element={<Profile />} /> {/* db 연동 할 땐 NoteList/:_id로 변경해야함*/}
           <Route path='/Friend' element={<Friend />} /> {/* db 연동 할 땐 /:_id로 변경해야함*/}
-          <Route path='/MeetingDetail/:_id' element={<MeetingDetail />} /> {/* db 연동 할 땐 MeetingDetail/:_id로 변경해야함*/}
+          <Route path='/MeetingDetail/:meeting_id' element={<MeetingDetail />} /> {/* db 연동 할 땐 MeetingDetail/:_id로 변경해야함*/}
           <Route path='/NoteDetail' element={<NoteDetail />} />{/* db 연동 할 땐 NoteDetail/:_id로 변경해야함*/}
           <Route path='/Testjang' element={<Testjang />} /> {/* 장고 테스트*/}
           <Route path='/videoTest' element={<VideoTest/>}/>{/*video Test*/}

@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import '../components/Style.css';
 import { useParams } from "react-router-dom";
-import axios from 'axios';
+
 
 const MeetingDetail = () => {
   const { meeting_id } = useParams();

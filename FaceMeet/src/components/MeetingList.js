@@ -4,7 +4,9 @@ import { Box } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import MeetingListStyle from './MeetingListStyle';
 
+
 function MeetingList() {
+
     const [meetings, setMeetingList] = useState([]);  // 변수 이름 변경
 
     /* 해당 회의 사진이 없을 경우 회의 이름이 사진으로 뜨게끔 설정해야함. */
@@ -66,8 +68,8 @@ function MeetingList() {
                 },
             }}
         >
-            {meetings.map((data) => (
-                <MeetingListStyle key={data.meeting_id} title={data.title} />
+            {meetings.map((meeting) => (
+                <MeetingListStyle key={meeting.meeting_id} meeting={meeting} />
             ))}
 
         </Box>

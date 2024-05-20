@@ -9,7 +9,9 @@ function MeetingListStyle({ meeting, onClick = () => {} }) {
             onClick(meeting);
         }
         console.log(meeting.meeting_id);
-        window.open(`/MeetingDetail/${meeting.meeting_id}`, '_blank');
+        window.open(`/MeetingDetail/${meeting.id}`, '_blank');
+        // 원래 meeting.meetind_id로 url 주소 입력했음.
+        // 현재 meeting.id로 고유 아이디 받아올 수 있게끔 변경
     };
 
     return (

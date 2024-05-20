@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import '../components/Style.css';
 import { useParams } from "react-router-dom";
+import axios from 'axios';
 
 
 const MeetingDetail = () => {
@@ -8,7 +9,7 @@ const MeetingDetail = () => {
 
   // 상태 관리: peers (각 피어의 스트림 저장), ws (WebSocket 연결), messages (채팅 메시지 배열)
   const [peers, setPeers] = useState({});
-  const [meeting, setMeeting] = useState({});
+  const [meeting, setMeetingId] = useState({});
   const [participants, setParticipants] = useState([]); // 참가자 목록을 저장할 상태
   const userVideo = useRef(); // 사용자 자신의 비디오 스트림을 참조
   const peersRef = useRef({}); // 연결된 피어들의 참조를 저장
@@ -18,7 +19,21 @@ const MeetingDetail = () => {
 
 
   useEffect(() => {
-    const websocket = new WebSocket(`ws://localhost:8001/ws/meeting/${meeting_id}`);
+    axios.get(`http://localhost:8000/api/participants/${meeting_id}`)
+      .then(response => {
+        const data = response.data;
+        console.log(data);
+        setParticipants(data);
+      })
+      .catch(error => {
+        console.error('참가자 데이터를 불러오는 중 에러 발생:', error);
+      });
+
+  }, []);
+
+
+  useEffect(() => {
+    const websocket = new WebSocket(`ws://localhost:8001/ws/meeting/${meeting_id}/`);
     setWs(websocket);
   }, []);
 

@@ -4,21 +4,25 @@ import { Box } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import MeetingListStyle from './MeetingListStyle';
 
+
 function MeetingList() {
-    const [MeetingList, setMeetingList] = useState();  // 변수 이름 변경
+
+    const [meetings, setMeetingList] = useState([]);  // 변수 이름 변경
 
     /* 해당 회의 사진이 없을 경우 회의 이름이 사진으로 뜨게끔 설정해야함. */
 
     useEffect(() => {
-        axios.get('/testData.json')
+        const userId = localStorage.getItem('user_id');
+        axios.get(`http://localhost:8000/api/meetings/user-meetings/${userId}/`)
             .then(response => {
-                const data = response.data.Meeting;
+                const data = response.data;
                 console.log(data);
                 setMeetingList(data);
             })
             .catch(error => {
                 console.error('데이터를 불러오는 중 에러 발생:', error);
             });
+
     }, []);
 
     /*    const list = [...Array(4)].map((_, i) => ({
@@ -34,7 +38,7 @@ function MeetingList() {
         setMeetingList(list);
     }, []);*/
 
-    if (!MeetingList) return <div>loading</div>;
+    if (!meetings) return <div>loading</div>;
 
 
     return (
@@ -64,8 +68,8 @@ function MeetingList() {
                 },
             }}
         >
-            {MeetingList.map((data) => (
-                <MeetingListStyle key={data.id} title={data.title} />
+            {meetings.map((meeting) => (
+                <MeetingListStyle key={meeting.meeting_id} meeting={meeting} />
             ))}
 
         </Box>

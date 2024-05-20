@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import background from '../login_background.png'; // 배경 이미지를 가져옵니다.
 import logo from '../Logo.png'; // 로고 이미지를 가져옵니다.
-import '../Login.css'; // 스타일을 가져옵니다.
+import './Login.css'; // 스타일을 가져옵니다.
 import { useNavigate } from 'react-router-dom'; // 페이지 이동을 위한 훅을 가져옵니다.
 import { jwtDecode } from 'jwt-decode'; // jwt-decode 라이브러리에서 jwt_decode 함수 가져오기
 
@@ -35,6 +35,7 @@ function Login() {
         const tokenPayload = jwtDecode(access); // JWT 디코딩하여 페이로드 가져오기
         const userID = tokenPayload.user_id; // 사용자 ID 추출
         localStorage.setItem('user_id', userID); // 사용자 ID를 로컬 스토리지에 저장
+        localStorage.setItem('email', email);
         localStorage.setItem('access_token', data.access);  // 액세스 토큰을 로컬 스토리지에 저장
         localStorage.setItem('refresh_token', data.refresh);  // 리프레시 토큰을 로컬 스토리지에 저장
         navigate('/Home');  // 홈페이지로 이동

@@ -1,0 +1,39 @@
+.videoContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+}
+
+.videoContainer.one video, .videoContainer.two video {
+    width: 50%;
+}
+
+.videoContainer.three video, .videoContainer.four video {
+    width: 50%;
+    height: 50%;
+}
+
+video {
+    border: 3px solid black;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.connectionStatus {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.connected {
+    background-color: green;
+}
+
+.disconnected {
+    background-color: red;
+}

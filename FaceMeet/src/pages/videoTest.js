@@ -10,7 +10,7 @@ function VideoTest() {
     const ws = useRef(null);
 
     useEffect(() => {
-        ws.current = new WebSocket('ws://localhost:8001/ws/meeting/0521e6a34069489f85ea8c392df29ef/');
+        ws.current = new WebSocket('ws://localhost:8001/ws/meeting/e67a67c22eca40199500cb0ed4aacc47/');
         
         ws.current.onmessage = function(e) {
             var data = JSON.parse(e.data);
@@ -33,8 +33,9 @@ function VideoTest() {
             setConnectionStatus(true);  // 연결이 성공하면 상태를 true로 변경
         };
 
-        ws.current.onclose = () => {
+        ws.current.onclose = (error) => {
             console.log("WebSocket Disconnected");
+            console.log(error);
             setConnectionStatus(false);  // 연결이 끊기면 상태를 false로 변경
         };
 

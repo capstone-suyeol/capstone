@@ -9,7 +9,7 @@ import { CiMicrophoneOff, CiMicrophoneOn, CiVideoOff, CiVideoOn, CiSettings } fr
 
 // 해당 유저의 프로필 가져오는 코드 필요 **
 
-function Feed() {
+const Feed = () => {
     const navigate = useNavigate();
 
     const [isMicOn, setIsMicOn] = useState(true);
@@ -17,11 +17,13 @@ function Feed() {
     const [profileList, setProfileList] = useState();
     const [meetings, setMeetings] = useState([]);
 
+
     useEffect(() => {
         const userId = localStorage.getItem('user_id');
-        axios.get('/testData.json')
+
+        axios.get(`http://localhost:8000/api/users/${userId}/`)
             .then(response => {
-                const data = response.data.User;
+                const data = response.data;
                 console.log(data);
                 setProfileList(data);
             })
@@ -32,13 +34,15 @@ function Feed() {
 
         axios.get(`http://localhost:8000/api/meetings/user-meetings/${userId}/`)
             .then(response => {
-                console.log(response.data)
+                console.log(response.data);
                 setMeetings(response.data);
             })
             .catch(error => {
                 console.error('Error fetching meetings:', error);
             });
     }, []);
+
+
 
 
     const toggleMic = (event) => {
@@ -58,9 +62,7 @@ function Feed() {
         return <div>Loading...</div>;
     }
 
-    const handleMeetingClick = (meeting_id) => {
-        navigate(`/MeetingDetail/${meeting_id}`);
-    };
+
 
     return (
         <div className='Layout'>
@@ -96,7 +98,7 @@ function Feed() {
                 >
                     <MeetingList sx={{ height: '100%' }} />
                     {meetings.map(meeting => (
-                        <div key={meeting.meeting_id} onClick={() => handleMeetingClick(meeting.meeting_id)}>
+                        <div key={`key-${meeting.meeting_id}`} >
 
                         </div>
                     ))}
@@ -134,10 +136,10 @@ function Feed() {
                             marginTop: '-16%',
                             fontWeight: 'bold'
                         }}>
-                            {profileList && profileList.length > 0 && profileList[0].name}
+                            {profileList && profileList.nickname}
                         </div>
 
-                        {profileList && profileList.length > 0 && (
+                        {/* {profileList.nickname (
                             <div style={{
                                 fontSize: '0.8rem',
                                 position: 'relative',
@@ -147,7 +149,7 @@ function Feed() {
                             }}>
                                 {profileList[0].state ? '온라인' : '오프라인'}
                             </div>
-                        )}
+                        )}*/ }
 
                         <div id='mic' className="icon-wrapper" onClick={toggleMic}> {isMicOn ? <CiMicrophoneOn /> : <CiMicrophoneOff />} </div>
 
@@ -175,6 +177,7 @@ function Feed() {
                     />
                 </Box>
             </Box>
+
         </div>
     );
 }

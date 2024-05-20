@@ -1,30 +1,39 @@
 import React, { useEffect, useState, useRef } from 'react';
 import '../components/Style.css';
+import { useParams } from "react-router-dom";
 import axios from 'axios';
 
+
 const MeetingDetail = () => {
+  const { meeting_id } = useParams();
+
   // 상태 관리: peers (각 피어의 스트림 저장), ws (WebSocket 연결), messages (채팅 메시지 배열)
   const [peers, setPeers] = useState({});
-  const [meeting, setMeeting] = useState({});
+  const [meeting, setMeetingId] = useState({});
+  const [participants, setParticipants] = useState([]); // 참가자 목록을 저장할 상태
   const userVideo = useRef(); // 사용자 자신의 비디오 스트림을 참조
   const peersRef = useRef({}); // 연결된 피어들의 참조를 저장
   const [ws, setWs] = useState(null); // WebSocket 연결 상태
   const [messages, setMessages] = useState([]); // 채팅 메시지들을 저장하는 배열
 
-  const user_id = localStorage.getItem('user_id')
-  
-  useEffect(() => {
-    axios.get(`http://localhost:8000/api/meetings/${_id}`),then((response) => {
-        setMeeting(response.data);
-    }).catch((error) => {
-      console.error('Error fetching data:', error);
-  })
-
-}, [_id]);
 
 
   useEffect(() => {
-    const websocket = new WebSocket("ws://my-django-app.com/ws/chat/");
+    axios.get(`http://localhost:8000/api/participants/${meeting_id}`)
+      .then(response => {
+        const data = response.data;
+        console.log(data);
+        setParticipants(data);
+      })
+      .catch(error => {
+        console.error('참가자 데이터를 불러오는 중 에러 발생:', error);
+      });
+
+  }, []);
+
+
+  useEffect(() => {
+    const websocket = new WebSocket(`ws://localhost:8001/ws/meeting/${meeting_id}/`);
     setWs(websocket);
   }, []);
 
@@ -96,7 +105,7 @@ const MeetingDetail = () => {
       <div className='Score'>분위기점수</div>
       <div className='Camera'>카메라
         <div className='두명1 '>
-          <video playsInline muted ref={userVideo} autoPlay style={{width: "40rem"}} />
+          <video playsInline muted ref={userVideo} autoPlay style={{ width: "40rem" }} />
           {Object.entries(peers).map(([peerID, stream]) => (
             <Video key={peerID} stream={stream} />
           ))}

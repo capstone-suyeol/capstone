@@ -300,6 +300,44 @@
     /* 원하는 색상으로 변경하세요 */
 }
 
+.video-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  
+  .video-wrapper {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .user-video {
+    width: 40rem;
+    order: 1; /* 본인 비디오가 첫 번째로 위치하도록 설정 */
+  }
+  
+  .peer-video {
+    width: 20rem;
+    order: 2; /* 다른 피어 비디오가 본인 비디오 다음에 위치하도록 설정 */
+  }
+  
+  .nickname {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 2px 5px;
+    border-radius: 3px;
+    font-size: 1rem;
+  }
+  
+  .ParticipantsCount {
+    font-size: 1.2rem;
+    margin: 1rem 0;
+  }
+  
+
 .NoteDetail label {
     color: white;
     font-size: 20px;

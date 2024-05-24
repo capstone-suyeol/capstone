@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -96,7 +97,7 @@ ROOT_URLCONF = 'capstone.urls'
 
 CORS_ALLOW_ALL_ORIGINS = True
 
-CORS_ORIGIN_WHITELIST = ['http://localhost:3000' ,'http://localhost:8000']
+CORS_ORIGIN_WHITELIST = ['http://localhost:3000' ,'http://localhost:8000','http://192.168.56.1:3000','http://192.168.56.1:8000']
 
 TEMPLATES = [
     {
@@ -166,6 +167,12 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
+
+# settings.py
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 
 
 # Static files (CSS, JavaScript, Images)

@@ -94,6 +94,23 @@ class MeetingViewSet(viewsets.ModelViewSet):
         # 회의 정보를 직렬화하여 반환
         serializer = self.get_serializer(all_meetings, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    @action(detail=True, methods=['get'], url_path='detail')
+    def meeting_detail(self, request, pk=None):
+        try:
+            meeting = Meeting.objects.get(id=pk)
+            participants = meeting.participants.all()
+            data = {
+                'title': meeting.title,
+                'description': meeting.description,
+                'time': meeting.time,
+                'host': meeting.host.nickname,
+                'participants': [{'id': participant.id, 'nickname': participant.nickname} for participant in participants],
+                'participant_count': participants.count(),
+            }
+            return Response(data)
+        except Meeting.DoesNotExist:
+            return Response({'error': 'Meeting not found'}, status=404)
 
 class ParticipantViewSet(viewsets.ModelViewSet):
     """
@@ -101,6 +118,7 @@ class ParticipantViewSet(viewsets.ModelViewSet):
     """
     queryset = Participant.objects.all()
     serializer_class = ParticipantSerializer
+
 
 class FriendViewSet(viewsets.ModelViewSet):
     """

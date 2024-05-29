@@ -30,7 +30,7 @@ function App() {
           <Route path='/MeetingDetail/:meeting_id' element={<MeetingDetail />} /> {/* db 연동 할 땐 MeetingDetail/:_id로 변경해야함*/}
           <Route path='/NoteDetail' element={<NoteDetail />} />{/* db 연동 할 땐 NoteDetail/:_id로 변경해야함*/}
           <Route path='/Testjang' element={<Testjang />} /> {/* 장고 테스트*/}
-          <Route path='/videoTest' element={<VideoTest/>}/>{/*video Test*/}
+          <Route path='/videoTest/:meeting_id' element={<VideoTest/>}/>{/*video Test*/}
         </Routes>
 
     </Suspense>

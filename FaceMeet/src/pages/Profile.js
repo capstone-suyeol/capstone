@@ -25,7 +25,7 @@ function Profile() {
 
         const fetchUser = async () => {
             try {
-                const response = await fetch(`http://127.0.0.1:8000/api/users/${userId}/`, {
+                const response = await fetch(`https://172.20.10.7/api/users/${userId}/`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -78,7 +78,7 @@ function Profile() {
                 formData.append('profileImage', profilePictureFile);
             }
 
-            const response = await fetch(`http://127.0.0.1:8000/api/users/${userId}/`, {
+            const response = await fetch(`https://172.20.10.7/api/users/${userId}/`, {
                 method: 'PATCH',
                 headers: {
                     'Authorization': `Bearer ${accessToken}`,

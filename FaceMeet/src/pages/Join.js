@@ -22,7 +22,7 @@ function Join() {
         const userData = { email, nickname, password };
 
         try {
-            const response = await fetch('http://localhost:8000/register/', {
+            const response = await fetch('https://172.20.10.7/register/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

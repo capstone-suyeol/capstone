@@ -31,7 +31,7 @@ DEBUG = True
 # X-Forwarded-Proto 헤더를 신뢰하도록 설정
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '172.20.10.7']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '172.20.10.7','172.20.208.1']
 
 
 # Application definition

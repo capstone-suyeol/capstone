@@ -28,7 +28,10 @@ SECRET_KEY = 'django-insecure-y6@=tn&x@qz+a0n_ym9k%7$)%mh5w2bz4smt!r4s-u3j!(s80o
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# X-Forwarded-Proto 헤더를 신뢰하도록 설정
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '172.20.10.7']
 
 
 # Application definition
@@ -80,6 +83,10 @@ REST_FRAMORK = {
     ],
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
     }
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
@@ -97,7 +104,7 @@ ROOT_URLCONF = 'capstone.urls'
 
 CORS_ALLOW_ALL_ORIGINS = True
 
-CORS_ORIGIN_WHITELIST = ['http://localhost:3000' ,'http://localhost:8000','http://192.168.56.1:3000','http://192.168.56.1:8000']
+CORS_ORIGIN_WHITELIST = ['http://localhost:3000' ,'http://localhost:8000','http://172.100.5.115:8000','https://172.100.5.115:3000','https://172.20.10.7:3000/']
 
 TEMPLATES = [
     {
@@ -147,14 +154,18 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# settings.py
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
             "hosts": [('127.0.0.1', 6379)],
+            "capacity": 10000,  # 증가된 용량 설정
+            "expiry": 10,  # 메시지 만료 시간 조정 (초)
         },
     },
 }
+
 
 
 # Internationalization

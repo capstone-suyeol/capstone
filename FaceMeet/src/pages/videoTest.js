@@ -1,93 +1,132 @@
-import React, { useEffect, useRef, useState } from 'react';
-import '../components/VideoTest.css';  // CSS 스타일 시트 임포트
+import React, { useEffect, useState, useRef } from 'react';
+import { useParams } from "react-router-dom";
 
-function VideoTest() {
-    const [participants] = useState([]);
-    const [connectionStatus, setConnectionStatus] = useState(false); // 웹소켓 연결 상태
-    const localVideoRef = useRef(null);
-    const remoteVideoRef = useRef(null);
-    const peerConnection = useRef(null);
+const MeetingDetail = () => {
+    const [localStream, setLocalStream] = useState(null);
+    const [remoteStream, setRemoteStream] = useState(null);
+    const { meeting_id } = useParams();
+    const localVideoRef = useRef();
+    const remoteVideoRef = useRef();
+    const pc = useRef(null);
     const ws = useRef(null);
+    const pendingCandidates = useRef([]);
 
     useEffect(() => {
-        ws.current = new WebSocket('ws://localhost:8001/ws/meeting/e67a67c22eca40199500cb0ed4aacc47/');
-        
-        ws.current.onmessage = function(e) {
-            var data = JSON.parse(e.data);
-            switch(data.type) {
-                case 'offer':
-                    handleOffer(data.sdp);
-                    break;
-                case 'answer':
-                    handleAnswer(data.sdp);
-                    break;
-                case 'candidate':
-                    handleCandidate(data.candidate);
-                    break;
-                default:
-                    break;
+        // RTCPeerConnection 초기화
+        pc.current = new RTCPeerConnection({
+            iceServers: [
+                { urls: 'stun:stun.l.google.com:19302' }
+            ]
+        });
+
+        ws.current = new WebSocket(`wss://172.20.10.7/ws/meeting/${meeting_id}/`);
+
+        ws.current.onmessage = async (event) => {
+            const data = JSON.parse(event.data);
+            console.log('WebSocket 메시지 수신:', data);
+
+            if (data.type === 'offer') {
+                if (pc.current.signalingState !== 'stable') {
+                    console.error('Unexpected signaling state:', pc.current.signalingState);
+                    return;
+                }
+                const desc = new RTCSessionDescription(data.sdp);
+                await pc.current.setRemoteDescription(desc);
+                const answer = await pc.current.createAnswer();
+                await pc.current.setLocalDescription(answer);
+                ws.current.send(JSON.stringify({ type: 'answer', sdp: answer }));
+            } else if (data.type === 'answer') {
+                if (pc.current.signalingState !== 'have-local-offer') {
+                    console.error('Unexpected signaling state:', pc.current.signalingState);
+                    return;
+                }
+                const desc = new RTCSessionDescription(data.sdp);
+                await pc.current.setRemoteDescription(desc);
+                pendingCandidates.current.forEach(async candidate => {
+                    await pc.current.addIceCandidate(new RTCIceCandidate(candidate));
+                });
+                pendingCandidates.current = [];
+            } else if (data.type === 'candidate') {
+                const candidate = new RTCIceCandidate(data.candidate);
+                if (pc.current.remoteDescription) {
+                    await pc.current.addIceCandidate(candidate);
+                } else {
+                    pendingCandidates.current.push(data.candidate);
+                }
             }
         };
-        ws.current.onopen = () => {
-            console.log("WebSocket Connected");
-            setConnectionStatus(true);  // 연결이 성공하면 상태를 true로 변경
+
+        pc.current.onicecandidate = (event) => {
+            if (event.candidate) {
+                ws.current.send(JSON.stringify({
+                    type: 'candidate',
+                    candidate: event.candidate
+                }));
+            }
         };
 
-        ws.current.onclose = (error) => {
-            console.log("WebSocket Disconnected");
-            console.log(error);
-            setConnectionStatus(false);  // 연결이 끊기면 상태를 false로 변경
+        pc.current.ontrack = (event) => {
+            console.log('트랙 수신:', event.streams);
+            setRemoteStream(event.streams[0]);
         };
 
-        navigator.mediaDevices.getUserMedia({ video: true, audio: true })
-            .then(stream => {
-                localVideoRef.current.srcObject = stream;
-                peerConnection.current = new RTCPeerConnection({
-                    iceServers: [{ urls: 'stun:stun.l.google.com:19302' }]
-                });
+        const startLocalStream = async () => {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+                setLocalStream(stream);
                 stream.getTracks().forEach(track => {
-                    peerConnection.current.addTrack(track, stream);
-                });
-                peerConnection.current.ontrack = event => {
-                    remoteVideoRef.current.srcObject = event.streams[0];
-                };
-                peerConnection.current.onicecandidate = event => {
-                    if (event.candidate) {
-                        ws.current.send(JSON.stringify({ type: 'candidate', candidate: event.candidate }));
+                    if (pc.current.signalingState !== 'closed') {
+                        pc.current.addTrack(track, stream);
                     }
-                };
-            });
+                });
+            } catch (error) {
+                console.error('미디어 장치 접근 중 에러 발생:', error);
+            }
+        };
+
+        startLocalStream();
 
         return () => {
-            if (ws.current) ws.current.close();
+            if (ws.current) {
+                ws.current.close();
+            }
+            if (pc.current) {
+                pc.current.close();
+            }
         };
     }, []);
 
-    const handleOffer = (sdp) => {
-        peerConnection.current.setRemoteDescription(new RTCSessionDescription({ type: 'offer', sdp }))
-            .then(() => peerConnection.current.createAnswer())
-            .then(answer => peerConnection.current.setLocalDescription(answer))
-            .then(() => ws.current.send(JSON.stringify({ type: 'answer', sdp: peerConnection.current.localDescription.sdp })));
+    const call = async () => {
+        if (pc.current.signalingState === 'stable') {
+            const offer = await pc.current.createOffer();
+            await pc.current.setLocalDescription(offer);
+            ws.current.send(JSON.stringify({ type: 'offer', sdp: offer }));
+            console.log('Offer 전송:', offer);
+        } else {
+            console.error('Cannot call in signaling state:', pc.current.signalingState);
+        }
     };
 
-    const handleAnswer = (sdp) => {
-        peerConnection.current.setRemoteDescription(new RTCSessionDescription({ type: 'answer', sdp }));
-    };
+    useEffect(() => {
+        if (localVideoRef.current && localStream) {
+            localVideoRef.current.srcObject = localStream;
+        }
+    }, [localStream]);
 
-    const handleCandidate = (candidate) => {
-        peerConnection.current.addIceCandidate(new RTCIceCandidate(candidate));
-    };
+    useEffect(() => {
+        if (remoteVideoRef.current && remoteStream) {
+            remoteVideoRef.current.srcObject = remoteStream;
+        }
+    }, [remoteStream]);
 
     return (
-        <div className="videoContainer">
-            <div className={`videoContainer ${participants.length === 1 ? 'one' : participants.length === 2 ? 'two' : participants.length === 3 ? 'three' : 'four'}`}>
-        <video ref={localVideoRef} autoPlay muted></video>
-            <div className={`connectionStatus ${connectionStatus ? 'connected' : 'disconnected'}`}></div>
-            <video ref={localVideoRef} autoPlay muted></video>
-            <video ref={remoteVideoRef} autoPlay></video>
-            </div>
+        <div>
+            <video ref={localVideoRef} autoPlay muted />
+            <video ref={remoteVideoRef} autoPlay />
+            <button onClick={call}>Call</button>
         </div>
     );
-}
+};
 
-export default VideoTest;
+export default MeetingDetail;
+

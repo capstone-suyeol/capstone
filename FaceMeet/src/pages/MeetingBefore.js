@@ -76,7 +76,7 @@ const NewMeetingModal = ({ onClose }) => {
     const handleSubmit = async (event) => {
         event.preventDefault();  // Prevent default form submission
         try {
-            const response = await axios.post('http://localhost:8000/api/meetings/', {
+            const response = await axios.post('https://172.20.10.7/api/meetings/', {
                 title: title,
                 meeting_id: meetingId,
                 password: password,
@@ -162,7 +162,7 @@ const AttendMeetingModal = ({ onClose, onConfirm }) => {
     const participate = async (event) => {
         event.preventDefault();  // Prevent default form submission
         try {
-            const response = await axios.post(`http://localhost:8000/api/participants/`, {
+            const response = await axios.post(`https://172.20.10.7/api/participants/`, {
                 meeting: meetingId,
                 user: userId,
             });

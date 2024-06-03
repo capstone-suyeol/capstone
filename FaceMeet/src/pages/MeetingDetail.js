@@ -15,7 +15,7 @@ const MeetingDetail = () => {
     const reconnectTimeout = useRef(null);
 
     useEffect(() => {
-        axios.get(`https://172.20.10.7/api/meetings/${meeting_id}/detail/`)
+        axios.get(`/api/meetings/${meeting_id}/detail/`)
             .then(response => {
                 const data = response.data;
                 setParticipantCount(data.participant_count);

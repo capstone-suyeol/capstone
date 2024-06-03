@@ -17,7 +17,7 @@ function MyComponent() {
     // fetchData 함수 내에서 데이터를 가져오고 처리합니다.
     const fetchData = async () => {
       try {
-        const response = await axios.get('https://172.20.10.7/api/data/');
+        const response = await axios.get('/api/data/');
         console.log(response.data);
         // 여기서 받아온 데이터를 원하는 대로 처리합니다.
       } catch (error) {

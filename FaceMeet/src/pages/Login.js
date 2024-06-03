@@ -15,7 +15,7 @@ function Login() {
   const handleLogin = async () => {
 
     try {
-      const response = await fetch('https://172.20.10.7/login/', {
+      const response = await fetch('/login/', {
 
         method: 'POST',
         headers: {

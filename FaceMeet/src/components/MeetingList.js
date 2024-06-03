@@ -13,7 +13,7 @@ function MeetingList() {
 
     useEffect(() => {
         const userId = localStorage.getItem('user_id');
-        axios.get(`https://172.20.10.7/api/meetings/user-meetings/${userId}/`)
+        axios.get(`/api/meetings/user-meetings/${userId}/`)
             .then(response => {
                 const data = response.data;
                 console.log(data);

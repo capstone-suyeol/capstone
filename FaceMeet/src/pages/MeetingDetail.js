@@ -104,7 +104,7 @@ const MeetingDetail = () => {
             wsRef.current.close();
         }
 
-        const websocket = new WebSocket(`wss://172.20.10.7/ws/meeting/${meeting_id}/`);
+        const websocket = new WebSocket(`wss://172.20.10.3/ws/meeting/${meeting_id}/`);
         wsRef.current = websocket;
 
         websocket.onopen = () => {

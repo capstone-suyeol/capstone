@@ -10,12 +10,12 @@ function Login() {
   const navigate = useNavigate(); // 페이지 이동 함수를 초기화합니다.
   const [email, setEmail] = useState(''); // 이메일 입력을 위한 상태를 설정합니다.
   const [password, setPassword] = useState(''); // 비밀번호 입력을 위한 상태를 설정합니다.
-
+  const Login_URL = 'https://172.20.10.3/login/';
   // 로그인 시도를 처리하는 함수입니다.
   const handleLogin = async () => {
 
     try {
-      const response = await fetch('/login/', {
+      const response = await fetch('https://172.20.10.3/login/', {
 
         method: 'POST',
         headers: {

@@ -31,7 +31,7 @@ DEBUG = True
 # X-Forwarded-Proto 헤더를 신뢰하도록 설정
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '172.20.10.7','172.20.208.1']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '172.20.10.3','172.20.208.1','172.30.1.76']
 
 
 # Application definition
@@ -104,7 +104,7 @@ ROOT_URLCONF = 'capstone.urls'
 
 CORS_ALLOW_ALL_ORIGINS = True
 
-CORS_ORIGIN_WHITELIST = ['http://localhost:3000' ,'http://localhost:8000','http://172.100.5.115:8000','https://172.100.5.115:3000','https://172.20.10.7:3000/']
+CORS_ORIGIN_WHITELIST = ['http://localhost:3000' ,'http://localhost:8000','http://172.100.5.115:8000','https://172.100.5.115:3000','https://172.20.10.7:3000/','https://172.30.1.76']
 
 TEMPLATES = [
     {

@@ -25,7 +25,7 @@ function Profile() {
 
         const fetchUser = async () => {
             try {
-                const response = await fetch(`/api/users/${userId}/`, {
+                const response = await fetch(`https://localhost/api/users/${userId}/`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',

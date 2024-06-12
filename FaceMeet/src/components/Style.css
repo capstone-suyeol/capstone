@@ -88,16 +88,6 @@
     overflow-y: auto;
 }
 
-.Score {
-    position: absolute;
-    width: 21%;
-    height: 20.5%;
-    background-color: #818181;
-    margin-top: 37%;
-    margin-left: 77.5%;
-    border-radius: 20px;
-}
-
 .Camera {
     position: fixed;
     width: 70rem;
@@ -505,18 +495,6 @@ input[type='range']::-ms-thumb {
     color: white;
     border: none;
     width: 100%;
-    border-radius: 20px;
-}
-
-/* Chatting 컴포넌트의 스타일 */
-.Chatting {
-    position: absolute;
-    width: 21%;
-    height: 34rem;
-    background-color: rgb(190, 190, 190);
-    /* 기본 배경색 */
-    margin-top: 1%;
-    margin-left: 77.5%;
     border-radius: 20px;
 }
 

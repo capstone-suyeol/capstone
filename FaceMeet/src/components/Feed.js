@@ -21,7 +21,7 @@ const Feed = () => {
     useEffect(() => {
         const userId = localStorage.getItem('user_id');
 
-        axios.get(`https://172.20.10.7/api/users/${userId}/`)
+        axios.get(`https://localhost/api/users/${userId}/`)
             .then(response => {
                 const data = response.data;
                 console.log(data);
@@ -32,7 +32,7 @@ const Feed = () => {
             });
 
 
-        axios.get(`https://172.20.10.7/api/meetings/user-meetings/${userId}/`)
+        axios.get(`https://localhost/api/meetings/user-meetings/${userId}/`)
             .then(response => {
                 console.log(response.data);
                 setMeetings(response.data);

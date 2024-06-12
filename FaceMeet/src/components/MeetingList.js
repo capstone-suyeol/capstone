@@ -8,12 +8,13 @@ import MeetingListStyle from './MeetingListStyle';
 function MeetingList() {
 
     const [meetings, setMeetingList] = useState([]);  // 변수 이름 변경
-
+    const userId = localStorage.getItem('user_id');
+    const URL = `https://172.20.10.3:3000/api/meetings/user-meetings/${userId}/`;
     /* 해당 회의 사진이 없을 경우 회의 이름이 사진으로 뜨게끔 설정해야함. */
 
     useEffect(() => {
-        const userId = localStorage.getItem('user_id');
-        axios.get(`/api/meetings/user-meetings/${userId}/`)
+        
+        axios.get(URL)
             .then(response => {
                 const data = response.data;
                 console.log(data);

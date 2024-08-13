@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { useParams } from "react-router-dom";
 import axios from 'axios';
-
+import kurentoUtils from 'kurento-utils';
 
 const MeetingDetail = () => {
     const { meeting_id } = useParams();
@@ -28,76 +28,100 @@ const MeetingDetail = () => {
 
     const createPeerConnection = useCallback((peerID, stream) => {
         console.log('PeerConnection 생성 시도:', peerID);
-        const peerConnection = new RTCPeerConnection({
-            iceServers: [{ urls: 'stun:stun.l.google.com:19302' }]
-        });
-
-        stream.getTracks().forEach(track => peerConnection.addTrack(track, stream));
-        console.log('PeerConnection 생성 완료:', peerID);
-
-        peerConnection.onicecandidate = event => {
-            if (event.candidate) {
-                console.log('ICE candidate 생성:', event.candidate);
+        // Kurento client 사용
+        const options = {
+            localVideo: userVideo.current,
+            onicecandidate: (candidate) => {
+                console.log('ICE candidate 생성:', candidate);
                 wsRef.current.send(JSON.stringify({
                     type: 'candidate',
                     target: peerID,
-                    candidate: event.candidate
+                    candidate: candidate
                 }));
             }
         };
 
-        peerConnection.ontrack = event => {
-            console.log('트랙 수신:', event.streams);
-            setPeers(prev => ({ ...prev, [peerID]: event.streams[0] }));
-        };
+        const webRtcPeer = kurentoUtils.WebRtcPeer.WebRtcPeerSendrecv(options, function (error) {
+            if (error) {
+                return console.error('WebRtcPeer 생성 중 에러:', error);
+            }
 
-        peerConnection.oniceconnectionstatechange = () => {
-            if (peerConnection.iceConnectionState === 'disconnected') {
-                console.log('PeerConnection disconnected:', peerID);
-                setPeers(prev => {
-                    const newPeers = { ...prev };
-                    delete newPeers[peerID];
-                    return newPeers;
-                });
-                peerConnection.close();
+            this.generateOffer((error, offerSdp) => {
+                if (error) {
+                    return console.error('SDP offer 생성 중 에러:', error);
+                }
+                console.log('SDP offer 생성:', offerSdp);
+                wsRef.current.send(JSON.stringify({
+                    type: 'offer',
+                    target: peerID,
+                    sdp: offerSdp
+                }));
+            });
+        });
+
+        peersRef.current[peerID] = webRtcPeer;
+        return webRtcPeer;
+    }, []);
+
+    const handleReceiveOffer = useCallback(({ sdp, from }) => {
+        console.log('Offer 수신:', from);
+        const options = {
+            remoteVideo: document.getElementById(`remote-video-${from}`),
+            onicecandidate: (candidate) => {
+                wsRef.current.send(JSON.stringify({
+                    type: 'candidate',
+                    target: from,
+                    candidate: candidate
+                }));
             }
         };
 
-        peersRef.current[peerID] = peerConnection;
+        const webRtcPeer = kurentoUtils.WebRtcPeer.WebRtcPeerRecvonly(options, function (error) {
+            if (error) {
+                return console.error('WebRtcPeer 생성 중 에러:', error);
+            }
 
-        return peerConnection;
+            this.processAnswer(sdp, (error) => {
+                if (error) {
+                    return console.error('SDP answer 처리 중 에러:', error);
+                }
+                console.log('SDP answer 처리 완료:', from);
+            });
+        });
+
+        peersRef.current[from] = webRtcPeer;
+        setPeers((prev) => ({ ...prev, [from]: webRtcPeer }));
     }, []);
 
-    const handleReceiveOffer = useCallback(async ({ sdp, from }) => {
-        console.log('Offer 수신:', from);
-        const peerConnection = createPeerConnection(from, userVideo.current.srcObject);
-        await peerConnection.setRemoteDescription(new RTCSessionDescription(sdp));
-        const answer = await peerConnection.createAnswer();
-        await peerConnection.setLocalDescription(answer);
+    const handleReceiveAnswer = useCallback(({ sdp, from }) => {
+        console.log('Answer 수신:', from);
+        const webRtcPeer = peersRef.current[from];
+        if (webRtcPeer) {
+            webRtcPeer.processAnswer(sdp, (error) => {
+                if (error) {
+                    return console.error('SDP answer 처리 중 에러:', error);
+                }
+                console.log('SDP answer 처리 완료:', from);
+            });
+        } else {
+            console.error('Answer 처리 실패 - 피어 연결이 존재하지 않음:', from);
+        }
+    }, []);
 
-        wsRef.current.send(JSON.stringify({
-            type: 'answer',
-            target: from,
-            sdp: answer
-        }));
-
-        console.log('Answer 전송:', from);
-    }, [createPeerConnection]);
-
-    const createAndSendOffer = useCallback(async (peerID) => {
-        console.log(`createAndSendOffer to ${peerID}`);
-        const peerConnection = createPeerConnection(peerID, userVideo.current.srcObject);
-        const offer = await peerConnection.createOffer();
-        await peerConnection.setLocalDescription(offer);
-
-        wsRef.current.send(JSON.stringify({
-            type: 'offer',
-            target: peerID,
-            sdp: offer
-        }));
-
-        console.log('Offer 전송:', peerID);
-    }, [createPeerConnection]);
+    const handleNewICECandidateMsg = useCallback(({ candidate, from }) => {
+        console.log('ICE Candidate 수신:', from);
+        const webRtcPeer = peersRef.current[from];
+        if (webRtcPeer) {
+            webRtcPeer.addIceCandidate(candidate, (error) => {
+                if (error) {
+                    return console.error('ICE Candidate 추가 중 에러:', error);
+                }
+                console.log('ICE Candidate 추가 완료:', from);
+            });
+        } else {
+            console.error('ICE Candidate 추가 실패 - 피어 연결이 존재하지 않음:', from);
+        }
+    }, []);
 
     const connectWebSocket = useCallback(() => {
         if (wsRef.current) {
@@ -137,7 +161,7 @@ const MeetingDetail = () => {
                     setConnectedUsers(data.count);
                     break;
                 case 'join':
-                    createAndSendOffer(data.from);
+                    createPeerConnection(data.from, userVideo.current.srcObject);
                     break;
                 default:
                     console.log('기타 메시지:', data.message);
@@ -149,7 +173,7 @@ const MeetingDetail = () => {
             console.error('WebSocket 연결이 종료되었습니다. 재연결 시도 중...');
             reconnectTimeout.current = setTimeout(() => connectWebSocket(), 1000);
         };
-    }, [meeting_id, createAndSendOffer, handleReceiveOffer]);
+    }, [meeting_id, createPeerConnection, handleReceiveOffer, handleReceiveAnswer, handleNewICECandidateMsg]);
 
     useEffect(() => {
         connectWebSocket();
@@ -177,31 +201,9 @@ const MeetingDetail = () => {
 
         return () => {
             const peersCopy = { ...peersRef.current };
-            Object.values(peersCopy).forEach(pc => pc.close());
+            Object.values(peersCopy).forEach(webRtcPeer => webRtcPeer.dispose());
         };
     }, []);
-
-    const handleReceiveAnswer = ({ sdp, from }) => {
-        console.log('Answer 수신:', from);
-        const peerConnection = peersRef.current[from];
-        if (peerConnection) {
-            peerConnection.setRemoteDescription(new RTCSessionDescription(sdp));
-            console.log('Answer 처리 완료:', from);
-        } else {
-            console.error('Answer 처리 실패 - 피어 연결이 존재하지 않음:', from);
-        }
-    };
-
-    const handleNewICECandidateMsg = ({ candidate, from }) => {
-        console.log('ICE Candidate 수신:', from);
-        const peerConnection = peersRef.current[from];
-        if (peerConnection) {
-            peerConnection.addIceCandidate(new RTCIceCandidate(candidate));
-            console.log('ICE Candidate 추가 완료:', from);
-        } else {
-            console.error('ICE Candidate 추가 실패 - 피어 연결이 존재하지 않음:', from);
-        }
-    };
 
     return (
         <div>
@@ -217,8 +219,8 @@ const MeetingDetail = () => {
                         <video playsInline muted ref={userVideo} autoPlay className='user-video' />
                         <div className='nickname'>{nickname}</div>
                     </div>
-                    {Object.entries(peers).map(([peerID, stream], index) => (
-                        <Video key={peerID} stream={stream} index={index} />
+                    {Object.entries(peers).map(([peerID, webRtcPeer], index) => (
+                        <Video key={peerID} webRtcPeer={webRtcPeer} index={index} peerID={peerID} />
                     ))}
                 </div>
             </div>
@@ -226,19 +228,19 @@ const MeetingDetail = () => {
     );
 };
 
-const Video = ({ stream, index }) => {
+const Video = ({ webRtcPeer, index, peerID }) => {
     const ref = useRef();
 
     useEffect(() => {
-        if (stream && ref.current) {
-            ref.current.srcObject = stream;
+        if (webRtcPeer && ref.current) {
+            ref.current.srcObject = webRtcPeer.getRemoteStream();
             console.log(`Peer ${index + 1}의 스트림 설정`);
         }
-    }, [stream, index]);
+    }, [webRtcPeer, index]);
 
     return (
         <div className='video-wrapper'>
-            <video playsInline autoPlay ref={ref} className='peer-video' />
+            <video playsInline autoPlay ref={ref} id={`remote-video-${peerID}`} className='peer-video' />
             <div className='nickname'>Participant {index + 1}</div>
         </div>
     );
